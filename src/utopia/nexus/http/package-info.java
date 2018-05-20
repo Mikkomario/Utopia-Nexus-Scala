@@ -1,8 +1,8 @@
 /**
- * This package contains models used in http-related operations on server side
+ * This package contains models and tools for transferring data over http
  */
 /**
  * @author Mikko Hilpinen
- * @since 25.11.2017
+ * @since 20.8.2017
  */
 package utopia.nexus.http;

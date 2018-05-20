@@ -1,13 +1,12 @@
 package utopia.nexus.rest
 
 import utopia.flow.generic.ValueConversions._
-
-import utopia.flow.datastructure.immutable.Model
+import utopia.nexus.http.Request
 import utopia.nexus.http.Path
+import utopia.nexus.http.Response
+import utopia.flow.datastructure.immutable.Model
 import utopia.nexus.http.ServerSettings
 import utopia.access.http.Headers
-import utopia.nexus.http.Response
-import utopia.nexus.http.Request
 import utopia.access.http.MethodNotAllowed
 import utopia.access.http.Method
 

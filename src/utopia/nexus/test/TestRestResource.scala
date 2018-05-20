@@ -1,24 +1,24 @@
 package utopia.nexus.test
 
 import utopia.access.http.Method._
-import utopia.flow.generic.ValueConversions._
 
+import utopia.nexus.http.Path
+import utopia.nexus.http.Request
+import utopia.nexus.http.Response
+import utopia.nexus.http.ServerSettings
+import utopia.nexus.rest.Error
+import utopia.nexus.rest.Follow
+import utopia.nexus.rest.Ready
+import utopia.nexus.rest.Resource
 import utopia.flow.datastructure.immutable.Constant
 import utopia.flow.datastructure.immutable.Model
 import utopia.flow.datastructure.template
 import utopia.flow.datastructure.template.Property
-import utopia.nexus.http.Response
+import utopia.flow.generic.ValueConversions.ValueOfString
 import utopia.access.http.BadRequest
 import utopia.access.http.NotImplemented
-import utopia.nexus.http.Path
-import utopia.nexus.http.Request
-import utopia.nexus.http.ServerSettings
-import utopia.nexus.rest.Ready
-import utopia.nexus.rest.Follow
-import utopia.nexus.rest.Error
 import utopia.access.http.Created
 import utopia.access.http.Forbidden
-import utopia.nexus.rest.Resource
 
 private object TestRestResource
 {

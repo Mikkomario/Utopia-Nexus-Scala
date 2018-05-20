@@ -2,9 +2,9 @@ package utopia.nexus.rest
 
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
-import utopia.nexus.http.Path
 import utopia.access.http.Status
 import utopia.access.http.NotFound
+import utopia.nexus.http.Path
 import utopia.nexus.http.Response
 
 /**

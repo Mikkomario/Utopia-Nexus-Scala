@@ -69,6 +69,11 @@ case class Path(val parts: Seq[String])
     def lastElement = parts.last
     
     /**
+     * The length / size of this path
+     */
+    def length = parts.size
+    
+    /**
      * This path as a complete url
      */
     def toServerUrl(implicit settings: ServerSettings) = settings.address + "/" + this
@@ -105,9 +110,14 @@ case class Path(val parts: Seq[String])
     def prepend(element: String): Path = Path.parse(element).map(prepend).getOrElse(this)
     
     /**
-     * Drops the first n element from this path and returns the result
+     * Drops the first n element(s) from this path and returns the result
      */
-    def drop(n: Int) = if (n >= parts.size) None else Some(Path(parts.drop(n)))
+    def drop(n: Int = 1) = if (n >= parts.size) None else Some(Path(parts.drop(n)))
+    
+    /**
+     * Drops the last n element(s) from this path and returns the result
+     */
+    def dropLast(n: Int = 1) = if (n >= parts.size) None else Some(Path(parts.dropRight(n)))
     
     /**
      * Finds the path before a specified path portion

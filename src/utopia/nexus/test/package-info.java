@@ -1,8 +1,8 @@
 /**
- * This package contains unit tests for Utopia Nexus features
+ * This package contains some unit tests for the features introduced in this project
  */
 /**
  * @author Mikko Hilpinen
- * @since 25.11.2017
+ * @since 21.8.2017
  */
 package utopia.nexus.test;

@@ -1,5 +1,7 @@
 package utopia.nexus.http
 
+import utopia.access.http.ContentCategory._
+
 import java.io.PrintWriter
 import utopia.flow.datastructure.template.Model
 import utopia.flow.datastructure.template.Property
@@ -15,7 +17,6 @@ import utopia.access.http.Cookie
 import utopia.access.http.Headers
 import utopia.access.http.ContentType
 import utopia.access.http.NotFound
-import utopia.access.http.ContentCategory._
 
 object Response
 {

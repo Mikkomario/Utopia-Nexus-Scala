@@ -2,11 +2,12 @@ package utopia.nexus.rest
 
 import utopia.flow.datastructure.template.Model
 import utopia.flow.datastructure.template.Property
-import utopia.access.http.Method
-import utopia.nexus.http.Request
+import utopia.nexus.http.FileUpload
 import utopia.nexus.http.Path
-import utopia.nexus.http.ServerSettings
 import utopia.nexus.http.Response
+import utopia.nexus.http.Request
+import utopia.nexus.http.ServerSettings
+import utopia.access.http.Method
 
 trait Resource
 {

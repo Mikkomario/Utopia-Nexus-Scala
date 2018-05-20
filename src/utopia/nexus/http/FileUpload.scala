@@ -14,6 +14,7 @@ import utopia.access.http.ContentType
  * @author Mikko Hilpinen
  * @since 7.9.2017
  */
+@deprecated("Replaced with StreamedBody", "v1.0")
 class FileUpload(val name: String, val sizeBytes: Long, 
         val contentType: ContentType, val submittedFileName: String, 
         getInputStream: => InputStream, writeToFile: String => Unit)
