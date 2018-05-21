@@ -66,6 +66,8 @@ class Request(val method: Method, val targetUrl: String, val path: Option[Path] 
             "parameters" -> parameters, "headers" -> headers.toModel, 
             "cookies" -> cookies.values.map { _.toModel }.toVector)) */
     
+    // TODO: Add ++ for parameters
+    
     
     // OTHER METHODS    ------------------------
     

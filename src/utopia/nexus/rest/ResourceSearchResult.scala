@@ -33,6 +33,8 @@ final case class Follow(val resource: Resource, val remainingPath: Option[Path])
  */
 final case class Redirected(val newPath: Path) extends ResourceSearchResult
 
+// TODO: Add context (parameter updates)
+
 /**
  * An error is returned when the next resource is not found or is otherwise not available
  */
