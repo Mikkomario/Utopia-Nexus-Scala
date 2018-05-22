@@ -42,15 +42,15 @@ import utopia.flow.util.Counter
  * @author Mikko Hilpinen
  * @since 17.9.2017
  */
-class FilesResource(override val name: String) extends Resource
+class FilesResource(override val name: String) extends Resource[Context]
 {
     // IMPLEMENTED METHODS & PROPERTIES    ---------------------
     
     override def allowedMethods = Vector(Get, Post, Delete)
     
-    override def follow(path: Path, request: Request)(implicit settings: ServerSettings) = Ready(Some(path));
+    override def follow(path: Path, request: Request)(implicit context: Context) = Ready(Some(path));
          
-    override def toResponse(request: Request, remainingPath: Option[Path])(implicit settings: ServerSettings) = 
+    override def toResponse(request: Request, remainingPath: Option[Path])(implicit context: Context) = 
     {
         request.method match 
         {
@@ -64,7 +64,7 @@ class FilesResource(override val name: String) extends Resource
     
     // OTHER METHODS    ---------------------------------------
     
-    private def handleGet(request: Request, remainingPath: Option[Path])(implicit settings: ServerSettings) = 
+    private def handleGet(request: Request, remainingPath: Option[Path])(implicit context: Context) = 
     {
         val targetFilePath = targetFilePathFrom(remainingPath)
         
@@ -82,7 +82,7 @@ class FilesResource(override val name: String) extends Resource
         }
     }
     
-    private def handlePost(request: Request, remainingPath: Option[Path])(implicit settings: ServerSettings) = 
+    private def handlePost(request: Request, remainingPath: Option[Path])(implicit context: Context) = 
     {
         if (request.body.isEmpty)
         {
@@ -111,16 +111,16 @@ class FilesResource(override val name: String) extends Resource
             {
                 // TODO: Add better handling for cases where request path is empty for some reason
                 val myPath = myLocationFrom(request.path.getOrElse(Path(name)), remainingPath)
-                val resultUrls = successes.mapValues(p => (myPath/p).toServerUrl)
+                val resultUrls = successes.mapValues(p => (myPath/p).toServerUrl(context.settings))
                 
-                val location = if (resultUrls.size == 1) resultUrls.head._2 else myPath.toServerUrl
+                val location = if (resultUrls.size == 1) resultUrls.head._2 else myPath.toServerUrl(context.settings)
                 
                 Response.fromModel(Model.fromMap(resultUrls)).withModifiedHeaders(_.withLocation(location))
             }
         }
     }
     
-    private def handleDelete(remainingPath: Option[Path])(implicit settings: ServerSettings) = 
+    private def handleDelete(remainingPath: Option[Path])(implicit context: Context) = 
     {
         if (remainingPath.isEmpty)
             Response.plainText("May not delete the root upload folder", Forbidden)
@@ -141,11 +141,11 @@ class FilesResource(override val name: String) extends Resource
         immutable.Model(Vector("files" -> files.toVector, "directories" -> directories.toVector))
     }
     
-    private def upload(part: StreamedBody, partName: String, remainingPath: Option[Path])(implicit settings: ServerSettings) = 
+    private def upload(part: StreamedBody, partName: String, remainingPath: Option[Path])(implicit context: Context) = 
     {
         val makeDirectoryResult = remainingPath.map(_.toString()).map(
-                settings.uploadPath.resolve).map(
-                p => Try(Files.createDirectories(p))).getOrElse(Success(settings.uploadPath))
+                context.settings.uploadPath.resolve).map(
+                p => Try(Files.createDirectories(p))).getOrElse(Success(context.settings.uploadPath))
         
         if (makeDirectoryResult.isSuccess)
         {
@@ -181,7 +181,7 @@ class FilesResource(override val name: String) extends Resource
         }
     }*/
     
-    private def delete(remainingPath: Path)(implicit settings: ServerSettings) = 
+    private def delete(remainingPath: Path)(implicit context: Context) = 
     {
         val targetFilePath = targetFilePathFrom(Some(remainingPath))
         if (Files.exists(targetFilePath))
@@ -194,9 +194,9 @@ class FilesResource(override val name: String) extends Resource
         }
     }
     
-    private def targetFilePathFrom(remainingPath: Option[Path])(implicit settings: ServerSettings) = 
-            remainingPath.map { remaining => settings.uploadPath.resolve(
-            remaining.toString) }.getOrElse(settings.uploadPath)
+    private def targetFilePathFrom(remainingPath: Option[Path])(implicit context: Context) = 
+            remainingPath.map { remaining => context.settings.uploadPath.resolve(
+            remaining.toString) }.getOrElse(context.settings.uploadPath)
     
     private def myLocationFrom(targetPath: Path, remainingPath: Option[Path]) = 
             remainingPath.flatMap(targetPath.before).getOrElse(targetPath);

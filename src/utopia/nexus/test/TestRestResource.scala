@@ -19,6 +19,7 @@ import utopia.access.http.BadRequest
 import utopia.access.http.NotImplemented
 import utopia.access.http.Created
 import utopia.access.http.Forbidden
+import utopia.nexus.rest.Context
 
 private object TestRestResource
 {
@@ -36,7 +37,7 @@ private object TestRestResource
  * @author Mikko Hilpinen
  * @since 10.10.2017
  */
-class TestRestResource(val name: String, initialValues: template.Model[Constant] = Model(Vector())) extends Resource
+class TestRestResource(val name: String, initialValues: template.Model[Constant] = Model(Vector())) extends Resource[Context]
 {
     // ATTRIBUTES    -----------------
     
@@ -50,7 +51,7 @@ class TestRestResource(val name: String, initialValues: template.Model[Constant]
     
     // IMPLEMENTED METHODS    --------
     
-    override def toResponse(request: Request, remainingPath: Option[Path])(implicit settings: ServerSettings) = 
+    override def toResponse(request: Request, remainingPath: Option[Path])(implicit context: Context) = 
     {
         request.method match 
         {
@@ -74,7 +75,7 @@ class TestRestResource(val name: String, initialValues: template.Model[Constant]
         }
     }
     
-    override def follow(path: Path, request: Request)(implicit settings: ServerSettings) = 
+    override def follow(path: Path, request: Request)(implicit context: Context) = 
     {
         // Post & Delete can be targeted on non-existing items at the end of the paths
         val remainingPath = path.tail
@@ -99,13 +100,14 @@ class TestRestResource(val name: String, initialValues: template.Model[Constant]
     // OTHER METHODS    -------------
     
     // Wraps values into a model and Displays the children as links
-    private def handleGet(path: Option[Path])(implicit settings: ServerSettings) = Response.fromModel(
+    private def handleGet(path: Option[Path])(implicit context: Context) = Response.fromModel(
             new Model[Constant](values ++ children.map(child => 
-            new Constant(child.name, (path/child.name).toServerUrl.toValue))));
+            new Constant(child.name, (path/child.name).toServerUrl(context.settings).toValue))));
     
     private def handlePost(path: Path, parameters: template.Model[Constant])
-            (implicit settings: ServerSettings) = 
+            (implicit context: Context) = 
     {
+        implicit val settings = context.settings
         children :+= new TestRestResource(path.lastElement, parameters)
         Response.empty(Created).withModifiedHeaders(_.withLocation(path.toServerUrl))
     }

@@ -9,7 +9,7 @@ import utopia.nexus.http.Request
 import utopia.nexus.http.ServerSettings
 import utopia.access.http.Method
 
-trait Resource
+trait Resource[-C <: Context]
 {
     // ABSTRACT PROPERTIES & METHODS ------------------
     
@@ -30,11 +30,11 @@ trait Resource
      * @param remainingPath if any of the path was left unfollowed by this resource earlier, it 
      * is provided here
      */
-    def toResponse(request: Request, remainingPath: Option[Path])(implicit settings: ServerSettings): Response
+    def toResponse(request: Request, remainingPath: Option[Path])(implicit context: C): Response
     
     /**
      * Follows the path to a new resource. Returns a result suitable for the situation.
      * @param path the path remaining <b>after</b> this resource
      */
-    def follow(path: Path, request: Request)(implicit settings: ServerSettings): ResourceSearchResult
+    def follow(path: Path, request: Request)(implicit context: C): ResourceSearchResult
 }

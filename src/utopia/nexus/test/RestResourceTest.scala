@@ -21,6 +21,9 @@ import utopia.access.http.Method
 import utopia.access.http.OK
 import utopia.access.http.Created
 import utopia.access.http.NotFound
+import utopia.nexus.rest.BaseContext
+import utopia.nexus.rest.BaseContext
+import utopia.nexus.rest.Context
 
 /**
  * This test makes sure the rest test resource and the request handler are working
@@ -34,7 +37,8 @@ object RestResourceTest extends App
     
     val rootResource = new TestRestResource("root")
     val filesResource = new FilesResource("files")
-    val handler = new RequestHandler(Vector(rootResource, filesResource), Some(Path("rest")))
+    val handler = new RequestHandler(Vector(rootResource, filesResource), Some(Path("rest")), 
+            () => new BaseContext())
     
     def responseToString(response: Response) = 
     {

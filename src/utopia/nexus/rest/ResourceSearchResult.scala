@@ -29,8 +29,8 @@ final case class Ready(val remainingPath: Option[Path] = None) extends ResourceS
  * @param parameterUpdates Any updates that should be made to request parameters for the followed 
  * resources
  */
-final case class Follow(val resource: Resource, val remainingPath: Option[Path], 
-        val parameterUpdates: Model[Constant] = Model.empty) extends ResourceSearchResult
+final case class Follow[-C <: Context](val resource: Resource[C], val remainingPath: Option[Path], 
+        val parameterUpdates: Model[Constant] = Model.empty)(implicit context: C) extends ResourceSearchResult
 
 /**
  * A redirect is returned when a link is found and must be followed using a separate path
