@@ -40,9 +40,10 @@ class RequestHandler(val childResources: Traversable[Resource], val path: Option
     
     // OTHER METHODS    -------------------
     
-    private def handlePath(request: Request, targetPath: Option[Path]): Response = 
+    private def handlePath(originalRequest: Request, targetPath: Option[Path]): Response = 
     {
         // Parses the target path (= request path - handler path)
+        var currentRequest = originalRequest
         var remainingPath = targetPath
         var error: Option[Error] = None
         var pathToSkip = path
@@ -97,7 +98,7 @@ class RequestHandler(val childResources: Traversable[Resource], val path: Option
                     !foundTarget && redirectPath.isEmpty)
             {
                 // Sees what's the resources reaction
-                val result = lastResource.get.follow(remainingPath.get, request);
+                val result = lastResource.get.follow(remainingPath.get, currentRequest);
                 result match
                 {
                     case Ready(remaining) => 
@@ -105,10 +106,13 @@ class RequestHandler(val childResources: Traversable[Resource], val path: Option
                         foundTarget = true
                         remainingPath = remaining
                     }
-                    case Follow(next, remaining) => 
+                    case Follow(next, remaining, updates) => 
                     {
                         lastResource = Some(next)
                         remainingPath = remaining
+                        
+                        if (!updates.isEmpty)
+                            currentRequest ++= updates
                         
                         // If there is no path left, assumes that the final resource is ready to 
                         // receive the request
@@ -117,7 +121,13 @@ class RequestHandler(val childResources: Traversable[Resource], val path: Option
                             foundTarget = true
                         }
                     }
-                    case Redirected(newPath) => redirectPath = Some(newPath)
+                    case Redirected(newPath, updates) => 
+                    {
+                        if (!updates.isEmpty)
+                            currentRequest ++= updates
+                            
+                        redirectPath = Some(newPath)
+                    }
                     case foundError: Error => error = Some(foundError)
                 }
             }
@@ -130,16 +140,16 @@ class RequestHandler(val childResources: Traversable[Resource], val path: Option
             }
             else if (redirectPath.isDefined)
             {
-                handlePath(request, redirectPath)
+                handlePath(currentRequest, redirectPath)
             }
             else if (foundTarget)
             {
                 // Makes sure the method can be used on the targeted resource
                 val allowedMethods = lastResource.get.allowedMethods
                 
-                if (allowedMethods.exists(_ == request.method))
+                if (allowedMethods.exists(_ == currentRequest.method))
                 {
-                    lastResource.get.toResponse(request, remainingPath)
+                    lastResource.get.toResponse(currentRequest, remainingPath)
                 }
                 else
                 {

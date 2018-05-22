@@ -6,6 +6,8 @@ import utopia.access.http.Status
 import utopia.access.http.NotFound
 import utopia.nexus.http.Path
 import utopia.nexus.http.Response
+import utopia.flow.datastructure.immutable.Model
+import utopia.flow.datastructure.immutable.Constant
 
 /**
  * There are different types of results that can be get when following a path alongside resources. 
@@ -24,21 +26,26 @@ final case class Ready(val remainingPath: Option[Path] = None) extends ResourceS
  * response should be followed by another search.
  * @param resource The next resource on the path
  * @param remainingPath The path remaining after the provided resource, if one exists
+ * @param parameterUpdates Any updates that should be made to request parameters for the followed 
+ * resources
  */
-final case class Follow(val resource: Resource, val remainingPath: Option[Path]) extends ResourceSearchResult
+final case class Follow(val resource: Resource, val remainingPath: Option[Path], 
+        val parameterUpdates: Model[Constant] = Model.empty) extends ResourceSearchResult
 
 /**
  * A redirect is returned when a link is found and must be followed using a separate path
  * @param newPath The new path to follow to the original destination resource
+ * @param parameterUpdates Any updates that should be made to request parameters for the followed 
+ * resources
  */
-final case class Redirected(val newPath: Path) extends ResourceSearchResult
-
-// TODO: Add context (parameter updates)
+final case class Redirected(val newPath: Path, val parameterUpdates: Model[Constant] = Model.empty) 
+        extends ResourceSearchResult
 
 /**
  * An error is returned when the next resource is not found or is otherwise not available
  */
-final case class Error(val status: Status = NotFound, val message: Option[String] = None) extends ResourceSearchResult
+final case class Error(val status: Status = NotFound, val message: Option[String] = None) 
+        extends ResourceSearchResult
 {
     def toResponse(charset: Charset = StandardCharsets.UTF_8) = message.map { 
             Response.plainText(_, status, charset) }.getOrElse(Response.empty(status))
