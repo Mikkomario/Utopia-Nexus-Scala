@@ -22,6 +22,16 @@ object Response
 {
     // OTHER METHODS    ----------------
     
+    // TODO: Add envelopes if necessary, should be customizable through server settings
+    // Not used for data types other than JSON and xml, naturally
+    // This means that the response status may actually be handled only in response 
+    // (always returning 200 outside)
+    // This should probably be done further when parsing the response (nexus for tomcat)
+    // For example, one can create method finalise that may wrap the response (based on settings) 
+    // Should probably return a different class to avoid wrapping of wrapped content
+    // Alternatively, provide a value for determining, whether the response is already wrapped
+    // See: https://medium.com/studioarmix/learn-restful-api-design-ideals-c5ec915a430f
+    
     /**
      * Wraps a model body into an UTF-8 encoded JSON response
      * @param body the model that forms the body of the response
