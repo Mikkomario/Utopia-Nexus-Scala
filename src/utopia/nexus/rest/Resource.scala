@@ -30,11 +30,11 @@ trait Resource[-C <: Context]
      * @param remainingPath if any of the path was left unfollowed by this resource earlier, it 
      * is provided here
      */
-    def toResponse(request: Request, remainingPath: Option[Path])(implicit context: C): Response
+    def toResponse(remainingPath: Option[Path])(implicit context: C): Response
     
     /**
      * Follows the path to a new resource. Returns a result suitable for the situation.
      * @param path the path remaining <b>after</b> this resource
      */
-    def follow(path: Path, request: Request)(implicit context: C): ResourceSearchResult
+    def follow(path: Path)(implicit context: C): ResourceSearchResult
 }

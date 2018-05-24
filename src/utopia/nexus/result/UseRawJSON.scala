@@ -11,7 +11,7 @@ import utopia.nexus.http.Response
 * @author Mikko Hilpinen
 * @since 24.5.2018
 **/
-object UseJSON extends RawResultParser
+object UseRawJSON extends RawResultParser
 {
     def parseDataResponse(data: Model[Constant], status: Status, request: Request) = 
         Response.fromModel(data, status)

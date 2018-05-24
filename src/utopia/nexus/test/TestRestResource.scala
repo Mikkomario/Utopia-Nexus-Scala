@@ -51,8 +51,10 @@ class TestRestResource(val name: String, initialValues: template.Model[Constant]
     
     // IMPLEMENTED METHODS    --------
     
-    override def toResponse(request: Request, remainingPath: Option[Path])(implicit context: Context) = 
+    override def toResponse(remainingPath: Option[Path])(implicit context: Context) = 
     {
+        val request = context.request
+        
         request.method match 
         {
             case Get => handleGet(request.path)
@@ -75,11 +77,13 @@ class TestRestResource(val name: String, initialValues: template.Model[Constant]
         }
     }
     
-    override def follow(path: Path, request: Request)(implicit context: Context) = 
+    override def follow(path: Path)(implicit context: Context) = 
     {
+        val method = context.request.method
+        
         // Post & Delete can be targeted on non-existing items at the end of the paths
         val remainingPath = path.tail
-        if ((request.method == Delete || request.method == Post) && remainingPath.isEmpty) 
+        if ((method == Delete || method == Post) && remainingPath.isEmpty) 
         {
             Ready(Some(path))
         }

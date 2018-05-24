@@ -44,18 +44,20 @@ import utopia.flow.util.Counter
  */
 class FilesResource(override val name: String) extends Resource[Context]
 {
+    // TODO: Convert to use result instead of response
+    
     // IMPLEMENTED METHODS & PROPERTIES    ---------------------
     
     override def allowedMethods = Vector(Get, Post, Delete)
     
-    override def follow(path: Path, request: Request)(implicit context: Context) = Ready(Some(path));
+    override def follow(path: Path)(implicit context: Context) = Ready(Some(path));
          
-    override def toResponse(request: Request, remainingPath: Option[Path])(implicit context: Context) = 
+    override def toResponse(remainingPath: Option[Path])(implicit context: Context) = 
     {
-        request.method match 
+        context.request.method match 
         {
-            case Get => handleGet(request, remainingPath)
-            case Post => handlePost(request, remainingPath)
+            case Get => handleGet(remainingPath)
+            case Post => handlePost(remainingPath)
             case Delete => handleDelete(remainingPath)
             case _ => Response.empty(MethodNotAllowed)
         }
@@ -64,13 +66,13 @@ class FilesResource(override val name: String) extends Resource[Context]
     
     // OTHER METHODS    ---------------------------------------
     
-    private def handleGet(request: Request, remainingPath: Option[Path])(implicit context: Context) = 
+    private def handleGet(remainingPath: Option[Path])(implicit context: Context) = 
     {
         val targetFilePath = targetFilePathFrom(remainingPath)
         
         if (Files.isDirectory(targetFilePath))
         {
-            Response.fromModel(makeDirectoryModel(targetFilePath.toFile(), request.targetUrl))
+            Response.fromModel(makeDirectoryModel(targetFilePath.toFile(), context.request.targetUrl))
         }
         else if (Files.isRegularFile(targetFilePath))
         {
@@ -82,12 +84,14 @@ class FilesResource(override val name: String) extends Resource[Context]
         }
     }
     
-    private def handlePost(request: Request, remainingPath: Option[Path])(implicit context: Context) = 
+    private def handlePost(remainingPath: Option[Path])(implicit context: Context) = 
     {
+        val request = context.request
+        
         if (request.body.isEmpty)
         {
-            // TODO: Use correct encoding
-            Response.plainText("No files were provided", BadRequest)
+            Response.plainText("No files were provided", BadRequest, 
+                    request.headers.preferredCharsetOrUTF8)
         }
         else
         {

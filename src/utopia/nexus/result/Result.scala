@@ -6,6 +6,8 @@ import utopia.flow.datastructure.immutable.Model
 import utopia.flow.datastructure.immutable.Constant
 import utopia.access.http.NoContent
 import utopia.access.http.OK
+import utopia.nexus.http.Request
+import utopia.nexus.rest.Context
 
 object Result
 {
@@ -66,5 +68,13 @@ trait Result
 	 * Whether this is a result of an successful operation
 	 */
 	def isSuccess = status.group == http.Success
+	
+	
+	// OTHER METHODS    ------------------
+	
+	/**
+	 * Converts this result into a response for the specified request
+	 */
+	def toResponse(implicit context: Context) = context.resultParser(this, context.request)
 }
 

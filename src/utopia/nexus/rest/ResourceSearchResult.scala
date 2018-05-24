@@ -29,8 +29,8 @@ final case class Ready(val remainingPath: Option[Path] = None) extends ResourceS
  * @param parameterUpdates Any updates that should be made to request parameters for the followed 
  * resources
  */
-final case class Follow[-C <: Context](val resource: Resource[C], val remainingPath: Option[Path], 
-        val parameterUpdates: Model[Constant] = Model.empty)(implicit context: C) extends ResourceSearchResult
+final case class Follow[-C <: Context](val resource: Resource[C], 
+        val remainingPath: Option[Path])(implicit context: C) extends ResourceSearchResult
 
 /**
  * A redirect is returned when a link is found and must be followed using a separate path
@@ -38,8 +38,7 @@ final case class Follow[-C <: Context](val resource: Resource[C], val remainingP
  * @param parameterUpdates Any updates that should be made to request parameters for the followed 
  * resources
  */
-final case class Redirected(val newPath: Path, val parameterUpdates: Model[Constant] = Model.empty) 
-        extends ResourceSearchResult
+final case class Redirected(val newPath: Path) extends ResourceSearchResult
 
 /**
  * An error is returned when the next resource is not found or is otherwise not available
@@ -50,5 +49,3 @@ final case class Error(val status: Status = NotFound, val message: Option[String
     def toResponse(charset: Charset = StandardCharsets.UTF_8) = message.map { 
             Response.plainText(_, status, charset) }.getOrElse(Response.empty(status))
 }
-
-// TODO: Add contextRequest

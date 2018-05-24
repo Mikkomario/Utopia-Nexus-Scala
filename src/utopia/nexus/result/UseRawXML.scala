@@ -17,7 +17,7 @@ import scala.Vector
 * @author Mikko Hilpinen
 * @since 24.5.2018
 **/
-class UseXML(val rootElementName: String = "Response") extends RawResultParser
+class UseRawXML(val rootElementName: String = "Response") extends RawResultParser
 {
 	def parseDataResponse(data: Model[Constant], status: Status, request: Request) = 
 	{

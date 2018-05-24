@@ -19,7 +19,7 @@ import utopia.access.http.Method
  * @since 9.9.2017
  */
 class RequestHandler[C <: Context](val childResources: Traversable[Resource[C]], 
-        val path: Option[Path] = None, val makeContext: () => C)
+        val path: Option[Path] = None, val makeContext: Request => C)
 {
     // COMPUTED PROPERTIES    -------------
     
@@ -38,19 +38,15 @@ class RequestHandler[C <: Context](val childResources: Traversable[Resource[C]],
     /**
      * Forms a response for the specified request
      */
-    def apply(request: Request) = handlePath(request, request.path)
+    def apply(request: Request) = handlePath(request.path)(makeContext(request))
     
     
     // OTHER METHODS    -------------------
     
-    private def handlePath(originalRequest: Request, targetPath: Option[Path]): Response = 
+    private def handlePath(targetPath: Option[Path])(implicit context: C): Response = 
     {
-        // Sets up request context
-        implicit val context = makeContext()
         try
         {
-            var currentRequest = originalRequest
-            
             // Parses the target path (= request path - handler path)
             var remainingPath = targetPath
             var error: Option[Error] = None
@@ -106,7 +102,7 @@ class RequestHandler[C <: Context](val childResources: Traversable[Resource[C]],
                         !foundTarget && redirectPath.isEmpty)
                 {
                     // Sees what's the resources reaction
-                    val result = lastResource.get.follow(remainingPath.get, currentRequest);
+                    val result = lastResource.get.follow(remainingPath.get);
                     result match
                     {
                         case Ready(remaining) => 
@@ -114,13 +110,10 @@ class RequestHandler[C <: Context](val childResources: Traversable[Resource[C]],
                             foundTarget = true
                             remainingPath = remaining
                         }
-                        case Follow(next: Resource[C], remaining, updates) => 
+                        case Follow(next: Resource[C], remaining) => 
                         {
                             lastResource = Some(next)
                             remainingPath = remaining
-                            
-                            if (!updates.isEmpty)
-                                currentRequest ++= updates
                             
                             // If there is no path left, assumes that the final resource is ready to 
                             // receive the request
@@ -129,13 +122,7 @@ class RequestHandler[C <: Context](val childResources: Traversable[Resource[C]],
                                 foundTarget = true
                             }
                         }
-                        case Redirected(newPath, updates) => 
-                        {
-                            if (!updates.isEmpty)
-                                currentRequest ++= updates
-                                
-                            redirectPath = Some(newPath)
-                        }
+                        case Redirected(newPath) => redirectPath = Some(newPath)
                         case foundError: Error => error = Some(foundError)
                     }
                 }
@@ -148,16 +135,16 @@ class RequestHandler[C <: Context](val childResources: Traversable[Resource[C]],
                 }
                 else if (redirectPath.isDefined)
                 {
-                    handlePath(currentRequest, redirectPath)
+                    handlePath(redirectPath)
                 }
                 else if (foundTarget)
                 {
                     // Makes sure the method can be used on the targeted resource
                     val allowedMethods = lastResource.get.allowedMethods
                     
-                    if (allowedMethods.exists(_ == currentRequest.method))
+                    if (allowedMethods.exists(_ == context.request.method))
                     {
-                        lastResource.get.toResponse(currentRequest, remainingPath)
+                        lastResource.get.toResponse(remainingPath)
                     }
                     else
                     {
