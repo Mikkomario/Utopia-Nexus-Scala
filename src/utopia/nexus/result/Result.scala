@@ -1,7 +1,6 @@
-package utopia.nexus.rest
+package utopia.nexus.result
 
 import utopia.access.http
-
 import utopia.access.http.Status
 import utopia.flow.datastructure.immutable.Model
 import utopia.flow.datastructure.immutable.Constant

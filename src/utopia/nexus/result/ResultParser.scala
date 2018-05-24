@@ -1,4 +1,4 @@
-package utopia.nexus.rest
+package utopia.nexus.result
 
 import utopia.nexus.http.Response
 import utopia.nexus.http.Request

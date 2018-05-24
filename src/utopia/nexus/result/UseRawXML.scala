@@ -1,7 +1,6 @@
-package utopia.nexus.rest
+package utopia.nexus.result
 
 import utopia.access.http.ContentCategory._
-
 import utopia.flow.datastructure.immutable.Model
 import utopia.flow.datastructure.immutable.Constant
 import utopia.access.http.Status
@@ -11,13 +10,14 @@ import utopia.nexus.http.Response
 import utopia.access.http.Headers
 import java.nio.charset.StandardCharsets
 import utopia.flow.parse.XmlWriter
+import scala.Vector
 
 /**
 * This result parser parses data into xml format
 * @author Mikko Hilpinen
 * @since 24.5.2018
 **/
-class RawXMLResultParser(val rootElementName: String = "Response") extends RawResultParser
+class UseXML(val rootElementName: String = "Response") extends RawResultParser
 {
 	def parseDataResponse(data: Model[Constant], status: Status, request: Request) = 
 	{
