@@ -8,6 +8,7 @@ import utopia.nexus.http.Path
 import utopia.nexus.http.Response
 import utopia.flow.datastructure.immutable.Model
 import utopia.flow.datastructure.immutable.Constant
+import utopia.nexus.result.Result.Failure
 
 /**
  * There are different types of results that can be get when following a path alongside resources. 
@@ -46,6 +47,5 @@ final case class Redirected(val newPath: Path) extends ResourceSearchResult
 final case class Error(val status: Status = NotFound, val message: Option[String] = None) 
         extends ResourceSearchResult
 {
-    def toResponse(charset: Charset = StandardCharsets.UTF_8) = message.map { 
-            Response.plainText(_, status, charset) }.getOrElse(Response.empty(status))
+    def toResult = Failure(status, message)
 }

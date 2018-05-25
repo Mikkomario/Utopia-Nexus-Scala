@@ -11,6 +11,9 @@ import utopia.nexus.http.ServerSettings
 import utopia.access.http.Headers
 import utopia.access.http.MethodNotAllowed
 import utopia.access.http.Method
+import utopia.nexus.result.Result.Failure
+import utopia.access.http.InternalServerError
+import utopia.nexus.result.Result.Success
 
 /**
  * This class handles a request by searching for the targeted resource and performing the right 
@@ -29,7 +32,7 @@ class RequestHandler[C <: Context](val childResources: Traversable[Resource[C]],
     {
         val childLinks = childResources.map { child => (child.name, (context.settings.address + "/" + 
                 path.map { _/(child.name).toString() }.getOrElse(child.name)).toValue) }
-        Response.fromModel(Model(childLinks))
+        Success(Model(childLinks)).toResponse
     }
     
     
@@ -76,7 +79,7 @@ class RequestHandler[C <: Context](val childResources: Traversable[Resource[C]],
             // Case: Error
             if (error.isDefined)
             {
-                error.get.toResponse()
+                error.get.toResult.toResponse
             }
             else if (remainingPath.isEmpty)
             {
@@ -130,8 +133,7 @@ class RequestHandler[C <: Context](val childResources: Traversable[Resource[C]],
                 // Handles search results
                 if (error.isDefined)
                 {
-                    // TODO: Use correct charset
-                    error.get.toResponse()
+                    error.get.toResult.toResponse
                 }
                 else if (redirectPath.isDefined)
                 {
@@ -154,9 +156,13 @@ class RequestHandler[C <: Context](val childResources: Traversable[Resource[C]],
                 }
                 else
                 {
-                    Error().toResponse()
+                    Error().toResult.toResponse
                 }
             }
+        }
+        catch 
+        {
+            case e: Exception => Failure(InternalServerError, Some(e.getMessage)).toResponse
         }
         finally
         {
@@ -164,6 +170,8 @@ class RequestHandler[C <: Context](val childResources: Traversable[Resource[C]],
         }
     }
     
-    private def makeNotAllowedResponse(allowedMethods: Seq[Method]) = new Response(
-            MethodNotAllowed, currentDateHeader.withAllowedMethods(allowedMethods))
+    private def makeNotAllowedResponse(allowedMethods: Seq[Method])(implicit context: C) = 
+            Failure(MethodNotAllowed, None, Model(Vector(
+            "allowed_methods" -> allowedMethods.toVector.map(_.name)))
+            ).toResponse.withModifiedHeaders(_.withAllowedMethods(allowedMethods))
 }

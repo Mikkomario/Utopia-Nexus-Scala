@@ -8,6 +8,7 @@ import utopia.access.http.NoContent
 import utopia.access.http.OK
 import utopia.nexus.http.Request
 import utopia.nexus.rest.Context
+import utopia.access.http.NotModified
 
 object Result
 {
@@ -22,18 +23,27 @@ object Result
     }
     
     /**
-     * This result may be returned when a request is invalid or when an error occurs
+     * This result may be returned when no change is made on server side for a POST / PUT / DELETE 
+     * request
      */
-    case class Failure(val status: Status, val description: Option[String] = None) extends Result
+    case object NoOperation extends Result
     {
+        def status = NotModified
+        def description = None
         def data = Model.empty
     }
+    
+    /**
+     * This result may be returned when a request is invalid or when an error occurs
+     */
+    case class Failure(val status: Status, val description: Option[String] = None, 
+            data: Model[Constant] = Model.empty) extends Result
     
     /**
      * This result may be returned when the API wants to return specific data
      */
     case class Success(val data: Model[Constant], val status: Status = OK, 
-            val description: Option[String] = None)
+            val description: Option[String] = None) extends Result
 }
 
 /**
