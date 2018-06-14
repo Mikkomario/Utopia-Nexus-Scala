@@ -26,11 +26,15 @@ trait RawResultParser extends ResultParser
     
     def apply(result: Result, request: Request) = 
     {
-        if (result.data.isEmpty)
-            result.description.map(Response.plainText(_, result.status, 
-                    request.headers.preferredCharset getOrElse StandardCharsets.UTF_8)) getOrElse 
-                    Response.empty(result.status)
-        else
-            parseDataResponse(result.data, result.status, request)
+        val response = 
+        {
+            if (result.data.isEmpty)
+                result.description.map(Response.plainText(_, result.status, 
+                        request.headers.preferredCharset getOrElse StandardCharsets.UTF_8)) getOrElse 
+                        Response.empty(result.status)
+            else
+                parseDataResponse(result.data, result.status, request)
+        }
+        response.withModifiedHeaders(_ ++ result.headers)
     }
 }

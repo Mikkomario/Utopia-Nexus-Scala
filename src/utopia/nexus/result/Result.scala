@@ -9,6 +9,7 @@ import utopia.access.http.OK
 import utopia.nexus.http.Request
 import utopia.nexus.rest.Context
 import utopia.access.http.NotModified
+import utopia.access.http.Headers
 
 object Result
 {
@@ -20,6 +21,7 @@ object Result
         def status = NoContent
         def description = None
         def data = Model.empty
+        def headers = Headers.empty
     }
     
     /**
@@ -31,19 +33,20 @@ object Result
         def status = NotModified
         def description = None
         def data = Model.empty
+        def headers = Headers.empty
     }
     
     /**
      * This result may be returned when a request is invalid or when an error occurs
      */
     case class Failure(val status: Status, val description: Option[String] = None, 
-            data: Model[Constant] = Model.empty) extends Result
+            data: Model[Constant] = Model.empty, val headers: Headers = Headers.empty) extends Result
     
     /**
      * This result may be returned when the API wants to return specific data
      */
     case class Success(val data: Model[Constant], val status: Status = OK, 
-            val description: Option[String] = None) extends Result
+            val description: Option[String] = None, val headers: Headers = Headers.empty) extends Result
 }
 
 /**
@@ -70,6 +73,11 @@ trait Result
 	 * The data returned by this result
 	 */
 	def data: Model[Constant]
+	
+	/**
+	 * The header modifications for this result
+	 */
+	def headers: Headers
 	
 	
 	// COMPUTED    ------------------------
