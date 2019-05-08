@@ -12,18 +12,13 @@ import utopia.nexus.http.Request
 import utopia.flow.datastructure.immutable.Model
 import utopia.flow.datastructure.immutable.Constant
 import utopia.nexus.http.Response
-import java.io.OutputStream
 import java.io.ByteArrayOutputStream
 import utopia.flow.parse.JSONReader
 import utopia.flow.datastructure.immutable.Value
 import utopia.nexus.rest.FilesResource
 import utopia.access.http.Method
-import utopia.access.http.OK
-import utopia.access.http.Created
-import utopia.access.http.NotFound
+import utopia.access.http.Status._
 import utopia.nexus.rest.BaseContext
-import utopia.nexus.rest.BaseContext
-import utopia.nexus.rest.Context
 
 /**
  * This test makes sure the rest test resource and the request handler are working
@@ -33,7 +28,7 @@ object RestResourceTest extends App
     DataType.setup()
     
     // Creates the main resources first
-    implicit val settings = ServerSettings("https://localhost:9999", Paths.get("D:/Uploads"))
+    implicit val settings: ServerSettings = ServerSettings("https://localhost:9999", Paths.get("D:/Uploads"))
     
     val rootResource = new TestRestResource("root")
     val filesResource = new FilesResource("files")
@@ -51,14 +46,10 @@ object RestResourceTest extends App
                 Some(out.toString(response.headers.charset.map(_.name()).getOrElse("UTF-8")))
             }
             finally
-            {
                 out.close()
-            }
         }
         else
-        {
             None
-        }
     }
     
     def stringToModel(s: String) = JSONReader.parseSingle(s)

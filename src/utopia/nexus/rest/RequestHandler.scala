@@ -7,12 +7,9 @@ import utopia.nexus.http.Request
 import utopia.nexus.http.Path
 import utopia.nexus.http.Response
 import utopia.flow.datastructure.immutable.Model
-import utopia.nexus.http.ServerSettings
 import utopia.access.http.Headers
-import utopia.access.http.MethodNotAllowed
-import utopia.access.http.Method
+import utopia.access.http.Status._
 import utopia.nexus.result.Result.Failure
-import utopia.access.http.InternalServerError
 import utopia.nexus.result.Result.Success
 
 /**
@@ -26,12 +23,12 @@ class RequestHandler[C <: Context](val childResources: Traversable[Resource[C]],
 {
     // COMPUTED PROPERTIES    -------------
     
-    private def currentDateHeader = Headers().withCurrentDate
+   //  private def currentDateHeader = Headers().withCurrentDate
     
     private def get(implicit context: C) = 
     {
         val childLinks = childResources.map { child => (child.name, (context.settings.address + "/" + 
-                path.map { _/(child.name).toString() }.getOrElse(child.name)).toValue) }
+                path.map { _/child.name.toString }.getOrElse(child.name)).toValue) }
         Success(Model(childLinks)).toResponse
     }
     
@@ -105,16 +102,13 @@ class RequestHandler[C <: Context](val childResources: Traversable[Resource[C]],
                         !foundTarget && redirectPath.isEmpty)
                 {
                     // Sees what's the resources reaction
-                    val result = lastResource.get.follow(remainingPath.get);
+                    val result = lastResource.get.follow(remainingPath.get)
                     result match
                     {
-                        case Ready(remaining) => 
-                        {
+                        case Ready(remaining) =>
                             foundTarget = true
                             remainingPath = remaining
-                        }
-                        case Follow(next: Resource[C], remaining) => 
-                        {
+                        case Follow(next: Resource[C], remaining) =>
                             lastResource = Some(next)
                             remainingPath = remaining
                             
@@ -124,7 +118,6 @@ class RequestHandler[C <: Context](val childResources: Traversable[Resource[C]],
                             {
                                 foundTarget = true
                             }
-                        }
                         case Redirected(newPath) => redirectPath = Some(newPath)
                         case foundError: Error => error = Some(foundError)
                     }
@@ -170,8 +163,9 @@ class RequestHandler[C <: Context](val childResources: Traversable[Resource[C]],
         }
     }
     
+    /*
     private def makeNotAllowedResponse(allowedMethods: Seq[Method])(implicit context: C) = 
             Failure(MethodNotAllowed, None, Model(Vector(
             "allowed_methods" -> allowedMethods.toVector.map(_.name)))
-            ).toResponse.withModifiedHeaders(_.withAllowedMethods(allowedMethods))
+            ).toResponse.withModifiedHeaders(_.withAllowedMethods(allowedMethods))*/
 }

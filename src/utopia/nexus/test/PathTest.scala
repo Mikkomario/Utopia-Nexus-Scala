@@ -13,7 +13,7 @@ object PathTest extends App
     
     assert(path == Path(Vector("a", "b", "c")))
     assert(path.head == "a")
-    assert(path.tail.exists { _ == Path("b", "c") })
+    assert(path.tail.contains(Path("b", "c")))
     assert(path.tail.get.tail.get.tail.isEmpty)
     assert(path/"d" == Path("a", "b", "c", "d"))
     assert(path.prepend("x") == Path("x", "a", "b", "c"))

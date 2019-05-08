@@ -1,22 +1,19 @@
 package utopia.nexus.http
 
+import utopia.access.http.Status._
 import utopia.access.http.ContentCategory._
-
-import java.io.PrintWriter
 import utopia.flow.datastructure.template.Model
 import utopia.flow.datastructure.template.Property
 import java.io.OutputStream
 import java.nio.file
 import java.nio.file.Files
-import utopia.flow.datastructure.immutable
 import java.nio.charset.StandardCharsets
 import java.nio.charset.Charset
+
 import utopia.access.http.Status
-import utopia.access.http.OK
 import utopia.access.http.Cookie
 import utopia.access.http.Headers
 import utopia.access.http.ContentType
-import utopia.access.http.NotFound
 
 object Response
 {
@@ -37,7 +34,7 @@ object Response
      * @param body the model that forms the body of the response
      * @param status the status of the response
      */
-    def fromModel(body: Model[Property], status: Status = OK, setCookies: Seq[Cookie] = Vector()) = 
+    def fromModel(body: Model[Property], status: Status = OK, setCookies: Seq[Cookie] = Vector()) =
             new Response(status, Headers().withCurrentDate.withContentType(Application/"json"), setCookies, 
                     Some(_.write(body.toJSON.getBytes(StandardCharsets.UTF_8))))
     
@@ -53,7 +50,7 @@ object Response
     {
         if (Files.exists(filePath) && !Files.isDirectory(filePath))
         {
-            val contentType = ContentType.guessFrom(filePath.getFileName.toString())
+            val contentType = ContentType.guessFrom(filePath.getFileName.toString)
             val headers = if (contentType.isDefined) Headers().withContentType(contentType.get) else Headers()
             new Response(status, headers.withCurrentDate, setCookies, Some(Files.copy(filePath, _)))
         }
@@ -87,7 +84,8 @@ object Response
  * @author Mikko Hilpinen
  * @since 20.8.2017
  * @param status the html status associated with this response. OK by default.
- * @param contentType the content type of this response. None by default.
+ * @param headers The headers in this response. Empty headers by default.
+  * @param setCookies Cookies to be set for the consequent requests
  * @param writeBody a function that writes the response body into a stream. None by default.
  */
 class Response(val status: Status = OK, val headers: Headers = Headers(), 
@@ -107,6 +105,5 @@ class Response(val status: Status = OK, val headers: Headers = Headers(),
      * Creates a new response with modified headers. The headers are modified in the provided 
      * function
      */
-    def withModifiedHeaders(modify: Headers => Headers) = new Response(status, modify(headers), 
-            setCookies, writeBody)
+    def withModifiedHeaders(modify: Headers => Headers) = new Response(status, modify(headers), setCookies, writeBody)
 }

@@ -1,7 +1,5 @@
 package utopia.nexus.http
 
-import utopia.flow.datastructure.immutable.Tree
-
 object Path
 {
     // OPERATORS    ----------------------
@@ -49,7 +47,7 @@ object Path
  * @author Mikko Hilpinen
  * @since 22.8.2017
  */
-case class Path(val parts: Seq[String])
+case class Path(parts: Seq[String])
 {
     // COMPUTED PROPERTIES    -----------------
     
@@ -61,7 +59,7 @@ case class Path(val parts: Seq[String])
     /**
      * The remaining portion of the path after the first element
      */
-    def tail = drop(1)
+    def tail = drop()
     
     /**
      * The last element on the path

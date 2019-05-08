@@ -3,7 +3,6 @@ package utopia.nexus.test
 import utopia.access.http.Method._
 
 import utopia.nexus.http.Path
-import utopia.nexus.http.Request
 import utopia.nexus.http.Response
 import utopia.nexus.http.ServerSettings
 import utopia.nexus.rest.Error
@@ -15,18 +14,14 @@ import utopia.flow.datastructure.immutable.Model
 import utopia.flow.datastructure.template
 import utopia.flow.datastructure.template.Property
 import utopia.flow.generic.ValueConversions.ValueOfString
-import utopia.access.http.BadRequest
-import utopia.access.http.NotImplemented
-import utopia.access.http.Created
-import utopia.access.http.Forbidden
+import utopia.access.http.Status._
 import utopia.nexus.rest.Context
 
 private object TestRestResource
 {
     // Parses all model type children from a model
     private def childrenFromModel(model: template.Model[Property]) = model.attributes.flatMap(attribute => 
-            attribute.value.model.map(attribute.name -> _)).map { case (name, model) => 
-            new TestRestResource(name, model) }
+            attribute.value.model.map(attribute.name -> _)).map { case (name, subModel) => new TestRestResource(name, subModel) }
     
     // Separates "normal" values from model type values
     private def nonChildValuesFromModel(model: template.Model[Constant]) = model.attributes.filter(_.value.model.isEmpty)
@@ -58,20 +53,16 @@ class TestRestResource(val name: String, initialValues: template.Model[Constant]
         request.method match 
         {
             case Get => handleGet(request.path)
-            case Post => 
-            {
+            case Post =>
                 if (request.path.isEmpty) 
                     Response.plainText("Path required", BadRequest) 
                 else 
                     handlePost(request.path.get, request.parameters)
-            }
-            case Delete => 
-            {
+            case Delete =>
                 if (request.path.isEmpty)
                     Response.plainText("Path required", BadRequest)
                 else
                     handleDelete(request.path.get.lastElement)
-            }
             case Put => handlePut(request.parameters)
             case _ => Response.empty(NotImplemented)
         }
@@ -105,13 +96,12 @@ class TestRestResource(val name: String, initialValues: template.Model[Constant]
     
     // Wraps values into a model and Displays the children as links
     private def handleGet(path: Option[Path])(implicit context: Context) = Response.fromModel(
-            new Model[Constant](values ++ children.map(child => 
-            new Constant(child.name, (path/child.name).toServerUrl(context.settings).toValue))));
+            Model.withConstants(values ++ children.map(child => new Constant(child.name,
+                (path/child.name).toServerUrl(context.settings).toValue))))
     
-    private def handlePost(path: Path, parameters: template.Model[Constant])
-            (implicit context: Context) = 
+    private def handlePost(path: Path, parameters: template.Model[Constant])(implicit context: Context) =
     {
-        implicit val settings = context.settings
+        implicit val settings: ServerSettings = context.settings
         children :+= new TestRestResource(path.lastElement, parameters)
         Response.empty(Created).withModifiedHeaders(_.withLocation(path.toServerUrl))
     }
@@ -128,9 +118,7 @@ class TestRestResource(val name: String, initialValues: template.Model[Constant]
     {
         // Cannot delete any existing children with PUT
         if (children.exists(child => parameters.findExisting(child.name).isDefined))
-        {
             Response.plainText("Modification of children is not allowed in PUT", Forbidden)
-        }
         else
         {
             children ++= TestRestResource.childrenFromModel(parameters)

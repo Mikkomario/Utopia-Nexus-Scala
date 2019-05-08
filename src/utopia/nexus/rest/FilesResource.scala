@@ -1,31 +1,18 @@
 package utopia.nexus.rest
 
 import utopia.access.http.Method._
-import collection.JavaConverters._
 import utopia.flow.generic.ValueConversions._
 import utopia.flow.util.NullSafe._
-import utopia.flow.datastructure.template
 import utopia.flow.datastructure.immutable
-import java.nio.file
 
 import utopia.nexus.http.Path
-import utopia.flow.datastructure.template.Property
-import utopia.nexus.http.ServerSettings
-import utopia.nexus.http.Request
 import utopia.nexus.http.Response
 import java.io.File
 import java.nio.file.Files
 import scala.util.Try
 import scala.util.Failure
 import utopia.flow.datastructure.immutable.Model
-import utopia.access.http.MethodNotAllowed
-import utopia.access.http.NotFound
-import utopia.access.http.BadRequest
-import utopia.access.http.Forbidden
-import utopia.access.http.OK
-import utopia.access.http.InternalServerError
-import utopia.access.http.Created
-import utopia.nexus.http.Body
+import utopia.access.http.Status._
 import java.time.LocalDateTime
 import utopia.nexus.http.StreamedBody
 import scala.util.Success
@@ -50,7 +37,7 @@ class FilesResource(override val name: String) extends Resource[Context]
     
     override def allowedMethods = Vector(Get, Post, Delete)
     
-    override def follow(path: Path)(implicit context: Context) = Ready(Some(path));
+    override def follow(path: Path)(implicit context: Context) = Ready(Some(path))
          
     override def toResponse(remainingPath: Option[Path])(implicit context: Context) = 
     {
@@ -72,7 +59,7 @@ class FilesResource(override val name: String) extends Resource[Context]
         
         if (Files.isDirectory(targetFilePath))
         {
-            Response.fromModel(makeDirectoryModel(targetFilePath.toFile(), context.request.targetUrl))
+            Response.fromModel(makeDirectoryModel(targetFilePath.toFile, context.request.targetUrl))
         }
         else if (Files.isRegularFile(targetFilePath))
         {
@@ -98,16 +85,14 @@ class FilesResource(override val name: String) extends Resource[Context]
             val counter = new Counter(1)
             val nameFromParam = request.parameters("filename").string.orElse(request.parameters("name").string)
             val partNames = request.body.map(p => p.name.getOrElse(nameFromParam.getOrElse(
-                    "upload_" + LocalDateTime.now()) + (if (request.body.size > 1) "_" + counter.next() else "")));
+                    "upload_" + LocalDateTime.now()) + (if (request.body.size > 1) "_" + counter.next() else "")))
             
-            val uploadResults = request.body.zip(partNames).map { 
-                    case (b, name) => upload(b, name, remainingPath) }
+            val uploadResults = request.body.zip(partNames).map { case (b, partName) => upload(b, partName, remainingPath) }
             val successes = partNames.zip(uploadResults).filter(_._2.isSuccess).toMap.mapValues(_.get)
             
             if (successes.isEmpty)
             {
-                // TODO: For some reason, the error message only tells the directory which 
-                // couldn't be created
+                // TODO: For some reason, the error message only tells the directory which couldn't be created
                 val errorMessage = uploadResults.head.failed.get.getMessage.toOption
                 errorMessage.map(Response.plainText(_, Forbidden)).getOrElse(Response.empty(Forbidden))
             }
@@ -203,14 +188,14 @@ class FilesResource(override val name: String) extends Resource[Context]
             remaining.toString) }.getOrElse(context.settings.uploadPath)
     
     private def myLocationFrom(targetPath: Path, remainingPath: Option[Path]) = 
-            remainingPath.flatMap(targetPath.before).getOrElse(targetPath);
+            remainingPath.flatMap(targetPath.before).getOrElse(targetPath)
     
-    private def parseLocation(targetPath: Path, remainingPath: Option[Path], generatedPath: Path) = 
-            myLocationFrom(targetPath, remainingPath)/generatedPath;
+    // private def parseLocation(targetPath: Path, remainingPath: Option[Path], generatedPath: Path) =
+    //        myLocationFrom(targetPath, remainingPath)/generatedPath
     
     private def recursiveDelete(file: File): Boolean = 
     {
-        if (file.isDirectory())
+        if (file.isDirectory)
         {
             // If a directory is targeted, removes all files from the said directory
             file.listFiles().foreach(recursiveDelete)

@@ -1,15 +1,10 @@
 package utopia.nexus.result
 
-import utopia.access.http
-import utopia.access.http.Status
+import utopia.access.http.{Headers, Status, StatusGroup}
 import utopia.flow.datastructure.immutable.Model
 import utopia.flow.datastructure.immutable.Constant
-import utopia.access.http.NoContent
-import utopia.access.http.OK
-import utopia.nexus.http.Request
+import utopia.access.http.Status._
 import utopia.nexus.rest.Context
-import utopia.access.http.NotModified
-import utopia.access.http.Headers
 
 object Result
 {
@@ -39,14 +34,14 @@ object Result
     /**
      * This result may be returned when a request is invalid or when an error occurs
      */
-    case class Failure(val status: Status, val description: Option[String] = None, 
-            data: Model[Constant] = Model.empty, val headers: Headers = Headers.empty) extends Result
+    case class Failure(status: Status, description: Option[String] = None,
+            data: Model[Constant] = Model.empty, headers: Headers = Headers.empty) extends Result
     
     /**
      * This result may be returned when the API wants to return specific data
      */
-    case class Success(val data: Model[Constant], val status: Status = OK, 
-            val description: Option[String] = None, val headers: Headers = Headers.empty) extends Result
+    case class Success(data: Model[Constant], status: Status = OK,
+            description: Option[String] = None, headers: Headers = Headers.empty) extends Result
 }
 
 /**
@@ -85,7 +80,7 @@ trait Result
 	/**
 	 * Whether this is a result of an successful operation
 	 */
-	def isSuccess = status.group == http.Success
+	def isSuccess = status.group == StatusGroup.Success
 	
 	
 	// OTHER METHODS    ------------------
