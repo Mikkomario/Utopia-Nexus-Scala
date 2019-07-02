@@ -18,27 +18,26 @@ import java.io.FileOutputStream
 * @since 12.5.2018
 **/
 class StreamedBody(val reader: BufferedReader, val contentType: ContentType = Text.plain, 
-        val contentLength: Option[Long] = None, val headers: Headers = Headers(), 
+        val contentLength: Option[Long] = None, val headers: Headers = Headers.currentDateHeaders,
         val name: Option[String] = None) extends Body
 {
     // OTHER METHODS    --------------------
     
-    def buffered[T](f: BufferedReader => T) = new BufferedBody(f(reader), contentType, 
-            contentLength, headers, name)
+    def buffered[T](f: BufferedReader => T) = BufferedBody(f(reader), contentType, contentLength, headers, name)
     
     /**
-	 * Writes the contents of this body into an output stream. Best performance is 
-	 * achieved if the output stream is buffered.
-	 */
-	def writeTo(output: OutputStream) = 
-	{
-	    // See: https://stackoverflow.com/questions/6927873/
-	    // how-can-i-read-a-file-to-an-inputstream-then-write-it-into-an-outputstream-in-sc
-        reader.tryConsume(r => Iterator 
-                .continually (r.read)
-                .takeWhile (-1 !=)
-                .foreach (output.write))
-	}
+     * Writes the contents of this body into an output stream. Best performance is
+     * achieved if the output stream is buffered.
+     */
+    def writeTo(output: OutputStream) =
+    {
+        // See: https://stackoverflow.com/questions/6927873/
+        // how-can-i-read-a-file-to-an-inputstream-then-write-it-into-an-outputstream-in-sc
+          reader.tryConsume(r => Iterator
+                  .continually (r.read)
+                  .takeWhile (-1 !=)
+                  .foreach (output.write))
+    }
     
     /**
      * Writes the contents of this body into a file

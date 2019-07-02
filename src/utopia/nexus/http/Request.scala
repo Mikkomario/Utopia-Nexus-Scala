@@ -52,11 +52,6 @@ class Request(val method: Method, val targetUrl: String, val path: Option[Path] 
      * The cookies provided with the request. All keys are cookie names in lower case letters
      */
     val cookies = rawCookies.map { cookie => (cookie.name.toLowerCase(), cookie) }.toMap
-    /*
-     * The file uploads provided with the request. All keys are parameter / part names in lower case 
-     * letters
-     */
-    //val fileUploads = rawFileUploads.map { upload => (upload.name.toLowerCase(), upload) }.toMap
     
     
     // IMPLEMENTED METHODS / PROPERTIES    -----
@@ -67,8 +62,21 @@ class Request(val method: Method, val targetUrl: String, val path: Option[Path] 
             "cookies" -> cookies.values.map { _.toModel }.toVector)) */
     
     
+    // OPERATORS    ----------------------------
+    
+    /**
+     * @return This request with added parameters
+     */
+    def ++(params: Model[Constant]) = withAddedParameters(params)
+    
+    
     // OTHER METHODS    ------------------------
     
-    def cookieValue(cookieName: String) = cookies.get(cookieName.toLowerCase()).map(
-            _.value).getOrElse(Value.empty());
+    def cookieValue(cookieName: String) = cookies.get(cookieName.toLowerCase()).map(_.value).getOrElse(Value.empty())
+    
+    /**
+     * Creates a new request with some parameters added
+     */
+    def withAddedParameters(params: Model[Constant]) = new Request(method, targetUrl, path, 
+            parameters ++ params, headers, body, cookies.values)
 }

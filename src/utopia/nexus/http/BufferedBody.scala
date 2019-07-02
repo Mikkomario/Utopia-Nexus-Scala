@@ -9,6 +9,6 @@ import utopia.access.http.Headers
 * @author Mikko Hilpinen
 * @since 12.5.2018
 **/
-class BufferedBody[T](val contents: T, val contentType: ContentType = Text.plain, 
-        val contentLength: Option[Long] = None, val headers: Headers = Headers(), 
-        val name: Option[String] = None) extends Body
+case class BufferedBody[+T](contents: T, contentType: ContentType = Text.plain,
+        contentLength: Option[Long] = None, headers: Headers = Headers.currentDateHeaders,
+        name: Option[String] = None) extends Body

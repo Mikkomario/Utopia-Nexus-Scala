@@ -9,4 +9,4 @@ package utopia.nexus.http
  * @param uploadPath an absolute path that determines where files are uploaded
  */
 // TODO: Add parameter encoding as well
-case class ServerSettings(val address: String, val uploadPath: java.nio.file.Path)
+case class ServerSettings(address: String, uploadPath: java.nio.file.Path)
