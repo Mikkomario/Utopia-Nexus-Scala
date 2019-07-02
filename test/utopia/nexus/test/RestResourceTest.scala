@@ -32,8 +32,7 @@ object RestResourceTest extends App
     
     val rootResource = new TestRestResource("root")
     val filesResource = new FilesResource("files")
-    val handler = new RequestHandler(Vector(rootResource, filesResource), Some(Path("rest")), 
-            req => new BaseContext(req))
+    val handler = new RequestHandler(Vector(rootResource, filesResource), Some(Path("rest")), req => new BaseContext(req))
     
     def responseToString(response: Response) = 
     {
