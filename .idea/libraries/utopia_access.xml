@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="utopia-access">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../Utopia-Access-Scala/out/artifacts/utopia_access/utopia-access.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
