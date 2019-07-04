@@ -7,10 +7,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58db1fbc-17d5-4263-88b3-2874e82541a0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/utopia_nexus.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/utopia_nexus_with_dependencies.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/META-INF/MANIFEST.MF" afterDir="false" />
+    <list default="true" id="58db1fbc-17d5-4263-88b3-2874e82541a0" name="Default Changelist" comment="Workspace updated">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="../Utopia-Access-Scala/out/" />
@@ -71,7 +68,64 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="ProjectPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Utopia-Nexus-Scala" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Utopia-Flow-Scala" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Utopia-Nexus-Scala" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Utopia-Nexus-Scala" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Utopia-Nexus-Scala" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Utopia-Nexus-Scala" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Utopia-Nexus-Scala" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Utopia-Nexus-Scala" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="nexus" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Utopia-Nexus-Scala" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Utopia-Nexus-Scala" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="nexus" type="462c0819:PsiDirectoryNode" />
+              <item name="http" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Utopia-Nexus-Scala" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Utopia-Nexus-Scala" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="nexus" type="462c0819:PsiDirectoryNode" />
+              <item name="rest" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Utopia-Nexus-Scala" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Utopia-Nexus-Scala" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="nexus" type="462c0819:PsiDirectoryNode" />
+              <item name="result" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Utopia-Nexus-Scala" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Utopia-Nexus-Scala" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Utopia-Nexus-Scala" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Utopia-Nexus-Scala" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="PackagesPane" />
     </panes>
   </component>
