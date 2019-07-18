@@ -8,11 +8,15 @@ import utopia.flow.generic.ValueConversions._
 import utopia.flow.generic.FromModelFactory
 import utopia.flow.datastructure.template
 import utopia.flow.datastructure.template.Property
+
 import scala.collection.immutable.Map
 import scala.collection.immutable.HashMap
 import utopia.access.http.Method
 import utopia.access.http.Cookie
 import utopia.access.http.Headers
+import utopia.flow.parse.JSONReader
+
+import scala.io.Source
 
 /*
 object Request extends FromModelFactory[Request]
@@ -38,9 +42,16 @@ object Request extends FromModelFactory[Request]
 
 /**
  * A request represents an http request made from client side to server side. A request targets 
- * a single resource with an operation and may contain parameters, files and headers
+ * a single resource with an operation and may contain parameters, body and headers
  * @author Mikko Hilpinen
  * @since 3.9.2017
+  * @param method http method used in request
+  * @param targetUrl Uri targeted through this request
+  * @param path Path parsed from the targeted uri
+  * @param parameters The parameters provided with the request (query or post)
+  * @param headers Headers provided with this request
+  * @param body The body elements provided with this request (streamed)
+  * @param rawCookies Cookies provided with this request
  */
 class Request(val method: Method, val targetUrl: String, val path: Option[Path] = None, 
         val parameters: Model[Constant] = Model(Vector()), val headers: Headers = Headers(), 
@@ -54,12 +65,9 @@ class Request(val method: Method, val targetUrl: String, val path: Option[Path] 
     val cookies = rawCookies.map { cookie => (cookie.name.toLowerCase(), cookie) }.toMap
     
     
-    // IMPLEMENTED METHODS / PROPERTIES    -----
+    // COMPUTED --------------------------------
     
-    /*
-    override def toModel = Model(Vector("method" -> method.name, "path" -> path.toString(), 
-            "parameters" -> parameters, "headers" -> headers.toModel, 
-            "cookies" -> cookies.values.map { _.toModel }.toVector)) */
+    // def jsonBody = body.headOption.map { b => Source.fromInputStream(b.) }
     
     
     // OPERATORS    ----------------------------
