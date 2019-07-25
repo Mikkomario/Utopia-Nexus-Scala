@@ -80,7 +80,7 @@ class Request(val method: Method, val targetUrl: String, val path: Option[Path] 
     
     // OTHER METHODS    ------------------------
     
-    def cookieValue(cookieName: String) = cookies.get(cookieName.toLowerCase()).map(_.value).getOrElse(Value.empty())
+    def cookieValue(cookieName: String) = cookies.get(cookieName.toLowerCase()).map(_.value).getOrElse(Value.empty)
     
     /**
      * Creates a new request with some parameters added

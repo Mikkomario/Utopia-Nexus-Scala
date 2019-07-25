@@ -36,14 +36,19 @@ class StreamedBody(val reader: BufferedReader, val contentType: ContentType = Te
         Try(Stream.continually(reader.readLine()).takeWhile(_ != null).mkString("\n")) }
     
     /**
-      * @return A buffered version of this body where contents are parsed from a JSON object into a model
+      * @return A buffered version of this body where contents are parsed from a JSON into a value
       */
-    def bufferedJSON = bufferedToString.map { _.flatMap(JSONReader.parseSingle) }
+    def bufferedJSON = bufferedToString.map { _.flatMap { JSONReader(_) } }
+    
+    /**
+     * @return A buffered version of this body where contents are parsed from a JSON into a value
+     */
+    def bufferedJSONModel = bufferedToString.map { _.flatMap { JSONReader(_).map { _.getModel } } }
     
     /**
       * @return A buffered version of this body where contents are parsed from a JSON array into a vector of values
       */
-    def bufferedJSONArray = bufferedToString.map { _.flatMap(JSONReader.parseValue).map { _.getVector } }
+    def bufferedJSONArray = bufferedToString.map { _.flatMap { JSONReader(_) }.map { _.getVector } }
     
     /**
       * @return A buffered version of this body where contents are parsed into an xml element

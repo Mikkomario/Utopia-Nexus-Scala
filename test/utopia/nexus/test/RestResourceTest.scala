@@ -51,7 +51,7 @@ object RestResourceTest extends App
             None
     }
     
-    def stringToModel(s: String) = JSONReader.parseSingle(s).toOption
+    def stringToModel(s: String) = JSONReader(s).toOption.flatMap { _.model }
     
     def responseToModel(response: Response) = responseToString(response).flatMap(stringToModel)
     
