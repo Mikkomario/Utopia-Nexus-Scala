@@ -1,9 +1,8 @@
 package utopia.nexus.http
 
+import utopia.flow.generic.ValueConversions._
 import utopia.access.http.Status._
 import utopia.access.http.ContentCategory._
-import utopia.flow.datastructure.template.Model
-import utopia.flow.datastructure.template.Property
 import java.io.OutputStream
 import java.nio.file
 import java.nio.file.Files
@@ -14,29 +13,36 @@ import utopia.access.http.Status
 import utopia.access.http.Cookie
 import utopia.access.http.Headers
 import utopia.access.http.ContentType
+import utopia.flow.datastructure.immutable.{Constant, Model, Value}
 
 object Response
 {
     // OTHER METHODS    ----------------
-    
-    // TODO: Add envelopes if necessary, should be customizable through server settings
-    // Not used for data types other than JSON and xml, naturally
-    // This means that the response status may actually be handled only in response 
-    // (always returning 200 outside)
-    // This should probably be done further when parsing the response (nexus for tomcat)
-    // For example, one can create method finalise that may wrap the response (based on settings) 
-    // Should probably return a different class to avoid wrapping of wrapped content
-    // Alternatively, provide a value for determining, whether the response is already wrapped
-    // See: https://medium.com/studioarmix/learn-restful-api-design-ideals-c5ec915a430f
     
     /**
      * Wraps a model body into an UTF-8 encoded JSON response
      * @param body the model that forms the body of the response
      * @param status the status of the response
      */
-    def fromModel(body: Model[Property], status: Status = OK, setCookies: Seq[Cookie] = Vector()) =
-            new Response(status, Headers().withCurrentDate.withContentType(Application/"json"), setCookies, 
-                    Some(_.write(body.toJSON.getBytes(StandardCharsets.UTF_8))))
+    def fromModel(body: Model[Constant], status: Status = OK, setCookies: Seq[Cookie] = Vector()) =
+        fromValue(body, status, setCookies)
+    
+    /**
+     * Wraps a value vector body into an UTF-8 encoded JSON response
+     * @param body the vector that forms the body of the response
+     * @param status the status of the response
+     */
+    def fromVector(body: Vector[Value], status: Status = OK, setCookies: Seq[Cookie] = Vector()) =
+        fromValue(body, status, setCookies)
+    
+    /**
+     * Wraps a body into an UTF-8 encoded JSON response
+     * @param body the value that forms the body of the response
+     * @param status the status of the response
+     */
+    def fromValue(body: Value, status: Status = OK, setCookies: Seq[Cookie] = Vector()) =
+        new Response(status, Headers().withCurrentDate.withContentType(Application/"json"), setCookies,
+            Some(_.write(body.toJSON.getBytes(StandardCharsets.UTF_8))))
     
     /**
      * Wraps a file into a response

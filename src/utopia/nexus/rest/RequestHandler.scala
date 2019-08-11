@@ -18,8 +18,8 @@ import utopia.nexus.result.Result.Success
  * @author Mikko Hilpinen
  * @since 9.9.2017
  */
-class RequestHandler[C <: Context](val childResources: Traversable[Resource[C]], 
-        val path: Option[Path] = None, val makeContext: Request => C)
+class RequestHandler[C <: Context](val childResources: Traversable[Resource[C]], val path: Option[Path] = None,
+                                   val makeContext: Request => C)
 {
     // COMPUTED PROPERTIES    -------------
     
@@ -56,9 +56,7 @@ class RequestHandler[C <: Context](val childResources: Traversable[Resource[C]],
             while (pathToSkip.isDefined && error.isEmpty)
             {
                 if (remainingPath.isEmpty || !remainingPath.get.head.equalsIgnoreCase(pathToSkip.get.head))
-                {
                     error = Some(Error())
-                }
                 else
                 {
                     remainingPath = remainingPath.get.tail
@@ -69,20 +67,14 @@ class RequestHandler[C <: Context](val childResources: Traversable[Resource[C]],
             val firstResource = remainingPath.map{ _.head }.flatMap { resourceName => 
                         childResources.find { _.name.equalsIgnoreCase(resourceName) } }
             if (remainingPath.isDefined && firstResource.isEmpty)
-            {
                 error = Some(Error())
-            }
             
             // Case: Error
             if (error.isDefined)
-            {
                 error.get.toResult.toResponse
-            }
+            // Case: RequestHandler was targeted
             else if (remainingPath.isEmpty)
-            {
-                // Case: RequestHandler was targeted
                 get
-            }
             else
             {
                 // Case: A resource under the handler was targeted
@@ -115,9 +107,8 @@ class RequestHandler[C <: Context](val childResources: Traversable[Resource[C]],
                             // If there is no path left, assumes that the final resource is ready to 
                             // receive the request
                             if (remainingPath.isEmpty)
-                            {
                                 foundTarget = true
-                            }
+                            
                         case Redirected(newPath) => redirectPath = Some(newPath)
                         case foundError: Error => error = Some(foundError)
                     }
@@ -125,22 +116,16 @@ class RequestHandler[C <: Context](val childResources: Traversable[Resource[C]],
                 
                 // Handles search results
                 if (error.isDefined)
-                {
                     error.get.toResult.toResponse
-                }
                 else if (redirectPath.isDefined)
-                {
                     handlePath(redirectPath)
-                }
                 else if (foundTarget)
                 {
                     // Makes sure the method can be used on the targeted resource
                     val allowedMethods = lastResource.get.allowedMethods
                     
-                    if (allowedMethods.exists(_ == context.request.method))
-                    {
+                    if (allowedMethods.exists { _ == context.request.method })
                         lastResource.get.toResponse(remainingPath)
-                    }
                     else
                     {
                         val headers = Headers().withCurrentDate.withAllowedMethods(allowedMethods.toVector)
@@ -148,9 +133,7 @@ class RequestHandler[C <: Context](val childResources: Traversable[Resource[C]],
                     }
                 }
                 else
-                {
                     Error().toResult.toResponse
-                }
             }
         }
         catch 

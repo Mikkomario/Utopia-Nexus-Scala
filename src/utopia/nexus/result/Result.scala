@@ -1,8 +1,7 @@
 package utopia.nexus.result
 
 import utopia.access.http.{Headers, Status, StatusGroup}
-import utopia.flow.datastructure.immutable.Model
-import utopia.flow.datastructure.immutable.Constant
+import utopia.flow.datastructure.immutable.Value
 import utopia.access.http.Status._
 import utopia.nexus.rest.Context
 
@@ -15,7 +14,7 @@ object Result
     {
         def status = NoContent
         def description = None
-        def data = Model.empty
+        def data = Value.empty
         def headers = Headers.empty
     }
     
@@ -27,20 +26,31 @@ object Result
     {
         def status = NotModified
         def description = None
-        def data = Model.empty
+        def data = Value.empty
         def headers = Headers.empty
     }
     
+	object Failure
+	{
+		/**
+		 * Creates a new failure result with description
+		 * @param status Failure status
+		 * @param description Failure description
+		 * @return A failure result
+		 */
+		def apply(status: Status, description: String) = new Failure(status, Some(description))
+	}
+	
     /**
      * This result may be returned when a request is invalid or when an error occurs
      */
     case class Failure(status: Status, description: Option[String] = None,
-            data: Model[Constant] = Model.empty, headers: Headers = Headers.empty) extends Result
+            data: Value = Value.empty, headers: Headers = Headers.empty) extends Result
     
     /**
      * This result may be returned when the API wants to return specific data
      */
-    case class Success(data: Model[Constant], status: Status = OK,
+    case class Success(data: Value, status: Status = OK,
             description: Option[String] = None, headers: Headers = Headers.empty) extends Result
 }
 
@@ -67,7 +77,7 @@ trait Result
 	/**
 	 * The data returned by this result
 	 */
-	def data: Model[Constant]
+	def data: Value
 	
 	/**
 	 * The header modifications for this result

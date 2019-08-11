@@ -48,6 +48,22 @@ Usage Notes
         - For example, if you use Vault, you may wish to pass a database connection as a part of your context (optional).
 
 
+v1.2    -----------------------
+
+    Required Libraries
+    ------------------
+        - Utopia Flow v1.6+
+        - Utopia Access v1.1.1+
+
+    Updates & Changes
+    -----------------
+
+        Response and result now take values as parameters instead of models (when parsing JSON responses). This allows
+        one to return model arrays, for example.
+
+        Result.Failure can now be created using a non-optional message (but no headers)
+
+
 v1.1    -----------------------
 
     Required Libraries

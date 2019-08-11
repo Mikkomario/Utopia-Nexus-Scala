@@ -1,7 +1,6 @@
 package utopia.nexus.result
 
-import utopia.flow.datastructure.immutable.Model
-import utopia.flow.datastructure.immutable.Constant
+import utopia.flow.datastructure.immutable.Value
 import utopia.nexus.http.Request
 import utopia.access.http.Status
 import utopia.nexus.http.Response
@@ -19,7 +18,7 @@ trait RawResultParser extends ResultParser
     /**
      * Parses the data portion of a response
      */
-    def parseDataResponse(data: Model[Constant], status: Status, request: Request): Response
+    def parseDataResponse(data: Value, status: Status, request: Request): Response
     
     
     // IMPLEMENTED METHODS    ----------

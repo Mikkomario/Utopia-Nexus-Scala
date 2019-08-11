@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="utopia-nexus-with-sources">
+    <output-path>$PROJECT_DIR$/out/artifacts/utopia_nexus_with_sources</output-path>
+    <root id="archive" name="utopia-nexus-with-sources.jar">
+      <element id="module-output" name="Utopia-Nexus-Scala" />
+      <element id="dir-copy" path="$PROJECT_DIR$/src" />
+    </root>
+  </artifact>
+</component>

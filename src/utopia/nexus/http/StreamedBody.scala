@@ -3,14 +3,13 @@ package utopia.nexus.http
 import scala.language.postfixOps
 import utopia.access.http.ContentCategory._
 import utopia.flow.util.AutoClose._
+import java.io.{BufferedReader, File, FileOutputStream, OutputStream}
 
-import java.io.BufferedReader
 import utopia.access.http.ContentType
 import utopia.access.http.Headers
+
 import scala.util.Try
-import java.io.OutputStream
-import java.io.File
-import java.io.FileOutputStream
+import utopia.flow.parse.{JSONReader, XmlReader}
 
 /**
 * This class represents a body send along with a request. These bodies can only be read once.
@@ -23,7 +22,38 @@ class StreamedBody(val reader: BufferedReader, val contentType: ContentType = Te
 {
     // OTHER METHODS    --------------------
     
+    /**
+      * @param f A function for handling stream contents
+      * @tparam T The type of buffered result
+      * @return A buffered body from the parsing results
+      */
     def buffered[T](f: BufferedReader => T) = BufferedBody(f(reader), contentType, contentLength, headers, name)
+    
+    /**
+      * @return A buffered version of this body where the stream is read into a string
+      */
+    def bufferedToString = buffered { reader =>
+        Try(Stream.continually(reader.readLine()).takeWhile(_ != null).mkString("\n")) }
+    
+    /**
+      * @return A buffered version of this body where contents are parsed from a JSON into a value
+      */
+    def bufferedJSON = bufferedToString.map { _.flatMap { JSONReader(_) } }
+    
+    /**
+     * @return A buffered version of this body where contents are parsed from a JSON into a value
+     */
+    def bufferedJSONModel = bufferedToString.map { _.flatMap { JSONReader(_).map { _.getModel } } }
+    
+    /**
+      * @return A buffered version of this body where contents are parsed from a JSON array into a vector of values
+      */
+    def bufferedJSONArray = bufferedToString.map { _.flatMap { JSONReader(_) }.map { _.getVector } }
+    
+    /**
+      * @return A buffered version of this body where contents are parsed into an xml element
+      */
+    def bufferedXml = buffered { XmlReader.parseWith(_) }
     
     /**
      * Writes the contents of this body into an output stream. Best performance is
