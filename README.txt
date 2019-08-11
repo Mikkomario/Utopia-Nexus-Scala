@@ -48,7 +48,7 @@ Usage Notes
         - For example, if you use Vault, you may wish to pass a database connection as a part of your context (optional).
 
 
-v1.1    -----------------------
+v1.2    -----------------------
 
     Required Libraries
     ------------------
