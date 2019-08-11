@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="utopia-nexus" />
+      <artifact name="utopia-nexus-with-dependencies" />
+      <artifact name="utopia-nexus-with-sources" />
+    </artifacts-to-build>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="58db1fbc-17d5-4263-88b3-2874e82541a0" name="Default Changelist" comment="Flow: Fixed deprecation problems. Refactored Value.empty.&#10;Access: Gitignore updated&#10;Nexus: Fixed problems from Flow changes. JSON response now takes value instead of model">
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/scala_compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Utopia-Access-Scala/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../Utopia-Access-Scala/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Utopia-Access-Scala/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Utopia-Access-Scala/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Utopia-Flow-Scala/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Utopia-Flow-Scala/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Utopia-Flow-Scala/README.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Utopia-Flow-Scala/README.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Utopia-Flow-Scala/src/utopia/flow/datastructure/immutable/Value.scala" beforeDir="false" afterPath="$PROJECT_DIR$/../Utopia-Flow-Scala/src/utopia/flow/datastructure/immutable/Value.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Utopia-Flow-Scala/src/utopia/flow/datastructure/mutable/Variable.scala" beforeDir="false" afterPath="$PROJECT_DIR$/../Utopia-Flow-Scala/src/utopia/flow/datastructure/mutable/Variable.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Utopia-Flow-Scala/src/utopia/flow/event/PropertyChangeEvent.scala" beforeDir="false" afterPath="$PROJECT_DIR$/../Utopia-Flow-Scala/src/utopia/flow/event/PropertyChangeEvent.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Utopia-Flow-Scala/src/utopia/flow/generic/ConversionHandler.scala" beforeDir="false" afterPath="$PROJECT_DIR$/../Utopia-Flow-Scala/src/utopia/flow/generic/ConversionHandler.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Utopia-Flow-Scala/src/utopia/flow/generic/DeclarationConstantGenerator.scala" beforeDir="false" afterPath="$PROJECT_DIR$/../Utopia-Flow-Scala/src/utopia/flow/generic/DeclarationConstantGenerator.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Utopia-Flow-Scala/src/utopia/flow/generic/DeclarationPropertyGenerator.scala" beforeDir="false" afterPath="$PROJECT_DIR$/../Utopia-Flow-Scala/src/utopia/flow/generic/DeclarationPropertyGenerator.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Utopia-Flow-Scala/src/utopia/flow/generic/DeclarationVariableGenerator.scala" beforeDir="false" afterPath="$PROJECT_DIR$/../Utopia-Flow-Scala/src/utopia/flow/generic/DeclarationVariableGenerator.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Utopia-Flow-Scala/src/utopia/flow/generic/FromModelFactory.scala" beforeDir="false" afterPath="$PROJECT_DIR$/../Utopia-Flow-Scala/src/utopia/flow/generic/FromModelFactory.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Utopia-Flow-Scala/src/utopia/flow/generic/SimpleConstantGenerator.scala" beforeDir="false" afterPath="$PROJECT_DIR$/../Utopia-Flow-Scala/src/utopia/flow/generic/SimpleConstantGenerator.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Utopia-Flow-Scala/src/utopia/flow/generic/SimplePropertyGenerator.scala" beforeDir="false" afterPath="$PROJECT_DIR$/../Utopia-Flow-Scala/src/utopia/flow/generic/SimplePropertyGenerator.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Utopia-Flow-Scala/src/utopia/flow/generic/SimpleVariableGenerator.scala" beforeDir="false" afterPath="$PROJECT_DIR$/../Utopia-Flow-Scala/src/utopia/flow/generic/SimpleVariableGenerator.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Utopia-Flow-Scala/src/utopia/flow/generic/ValueConversions.scala" beforeDir="false" afterPath="$PROJECT_DIR$/../Utopia-Flow-Scala/src/utopia/flow/generic/ValueConversions.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Utopia-Flow-Scala/src/utopia/flow/parse/JSONReader.scala" beforeDir="false" afterPath="$PROJECT_DIR$/../Utopia-Flow-Scala/src/utopia/flow/parse/JSONReader.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Utopia-Flow-Scala/src/utopia/flow/parse/XmlElement.scala" beforeDir="false" afterPath="$PROJECT_DIR$/../Utopia-Flow-Scala/src/utopia/flow/parse/XmlElement.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Utopia-Flow-Scala/src/utopia/flow/parse/XmlRreader.scala" beforeDir="false" afterPath="$PROJECT_DIR$/../Utopia-Flow-Scala/src/utopia/flow/parse/XmlRreader.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Utopia-Flow-Scala/test/utopia/flow/test/DataTypeTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/../Utopia-Flow-Scala/test/utopia/flow/test/DataTypeTest.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Utopia-Flow-Scala/test/utopia/flow/test/JSONTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/../Utopia-Flow-Scala/test/utopia/flow/test/JSONTest.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.txt" beforeDir="false" afterPath="$PROJECT_DIR$/README.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utopia/nexus/http/Request.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/utopia/nexus/http/Request.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utopia/nexus/http/Response.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/utopia/nexus/http/Response.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utopia/nexus/http/StreamedBody.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/utopia/nexus/http/StreamedBody.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utopia/nexus/result/RawResultParser.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/utopia/nexus/result/RawResultParser.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utopia/nexus/result/Result.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/utopia/nexus/result/Result.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utopia/nexus/result/UseRawJSON.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/utopia/nexus/result/UseRawJSON.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utopia/nexus/result/UseRawXML.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/utopia/nexus/result/UseRawXML.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utopia/nexus/result/UseRawXMLOrJSON.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/utopia/nexus/result/UseRawXMLOrJSON.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/utopia/nexus/test/RestResourceTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/test/utopia/nexus/test/RestResourceTest.scala" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="isMigrated" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="development" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../Utopia-Flow-Scala" />
+    <option name="ROOT_SYNC" value="SYNC" />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-7" />
+    <option name="width" value="1813" />
+    <option name="height" value="1567" />
+  </component>
+  <component name="ProjectId" id="1OUixT2DxjswiVB2smruJE5jr2E" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/test" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
+    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="Scala Compiler" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="58db1fbc-17d5-4263-88b3-2874e82541a0" name="Default Changelist" comment="" />
+      <created>1562068465541</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1562068465541</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Added idea files">
+      <created>1562068639641</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1562068639641</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Nexus: Fixing project setup">
+      <created>1562069130618</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1562069130618</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Minor updates and fixes. Readme added. Tests moved under a separate source.">
+      <created>1562071768555</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1562071768555</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Workspace updated">
+      <created>1562072108392</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1562072108392</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Added -with-sources -artifacts">
+      <created>1563436593545</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1563436593546</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Flow: XmlReader refactored&#10;Nexus: Added conversions from StreamedBody to JSON and Xml">
+      <created>1563453117956</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1563453117956</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added idea files" />
+    <MESSAGE value="Nexus: Fixing project setup" />
+    <MESSAGE value="Minor updates and fixes. Readme added. Tests moved under a separate source." />
+    <MESSAGE value="Workspace updated" />
+    <MESSAGE value="Added -with-sources -artifacts" />
+    <MESSAGE value="Flow: XmlReader refactored&#10;Nexus: Added conversions from StreamedBody to JSON and Xml" />
+    <MESSAGE value="Flow: Fixed deprecation problems. Refactored Value.empty.&#10;Access: Gitignore updated&#10;Nexus: Fixed problems from Flow changes. JSON response now takes value instead of model" />
+    <option name="LAST_COMMIT_MESSAGE" value="Flow: Fixed deprecation problems. Refactored Value.empty.&#10;Access: Gitignore updated&#10;Nexus: Fixed problems from Flow changes. JSON response now takes value instead of model" />
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <last-edited>utopia-nexus-with-sources</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>Utopia-Nexus-Scala</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8.0_144</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

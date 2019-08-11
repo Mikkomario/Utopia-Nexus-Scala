@@ -1,8 +1,7 @@
 package utopia.nexus.result
 
 import utopia.nexus.http.Request
-import utopia.flow.datastructure.immutable.Model
-import utopia.flow.datastructure.immutable.Constant
+import utopia.flow.datastructure.immutable.{Constant, Model, Value}
 import utopia.access.http.Status
 import utopia.nexus.http.Response
 
@@ -13,6 +12,5 @@ import utopia.nexus.http.Response
 **/
 object UseRawJSON extends RawResultParser
 {
-    def parseDataResponse(data: Model[Constant], status: Status, request: Request) = 
-        Response.fromModel(data, status)
+    def parseDataResponse(data: Value, status: Status, request: Request) = Response.fromValue(data, status)
 }

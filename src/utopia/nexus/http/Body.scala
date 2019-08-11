@@ -35,5 +35,5 @@ trait Body
 	/**
 	 * Whether this body is empty
 	 */
-	def isEmpty = contentLength.exists(_ == 0) && !headers.isChunked
+	def isEmpty = contentLength.contains(0) && !headers.isChunked
 }

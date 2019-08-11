@@ -32,8 +32,7 @@ object RestResourceTest extends App
     
     val rootResource = new TestRestResource("root")
     val filesResource = new FilesResource("files")
-    val handler = new RequestHandler(Vector(rootResource, filesResource), Some(Path("rest")), 
-            req => new BaseContext(req))
+    val handler = new RequestHandler(Vector(rootResource, filesResource), Some(Path("rest")), req => new BaseContext(req))
     
     def responseToString(response: Response) = 
     {
@@ -52,7 +51,7 @@ object RestResourceTest extends App
             None
     }
     
-    def stringToModel(s: String) = JSONReader.parseSingle(s)
+    def stringToModel(s: String) = JSONReader(s).toOption.flatMap { _.model }
     
     def responseToModel(response: Response) = responseToString(response).flatMap(stringToModel)
     

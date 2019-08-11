@@ -9,6 +9,15 @@ import utopia.access.http.Headers
 * @author Mikko Hilpinen
 * @since 12.5.2018
 **/
-class BufferedBody[T](val contents: T, val contentType: ContentType = Text.plain, 
-        val contentLength: Option[Long] = None, val headers: Headers = Headers(), 
-        val name: Option[String] = None) extends Body
+case class BufferedBody[+A](contents: A, contentType: ContentType = Text.plain,
+        contentLength: Option[Long] = None, headers: Headers = Headers.currentDateHeaders,
+        name: Option[String] = None) extends Body
+{
+	/**
+	  * Maps the contents of this body
+	  * @param f A function for mapping content
+	  * @tparam B Type of result content
+	  * @return A copy of this body with mapped content
+	  */
+	def map[B](f: A => B) = copy(contents = f(contents))
+}

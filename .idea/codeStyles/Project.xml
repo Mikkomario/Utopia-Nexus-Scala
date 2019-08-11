@@ -1,6 +1,7 @@
 <component name="ProjectCodeStyleConfiguration">
   <code_scheme name="Project" version="173">
     <ScalaCodeStyleSettings>
+<<<<<<< HEAD
       <option name="INDENT_FIRST_PARAMETER" value="false" />
       <option name="INDENT_FIRST_PARAMETER_CLAUSE" value="true" />
       <option name="KEEP_ONE_LINE_LAMBDAS_IN_ARG_LIST" value="true" />
