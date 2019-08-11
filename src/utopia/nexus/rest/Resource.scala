@@ -1,12 +1,7 @@
 package utopia.nexus.rest
 
-import utopia.flow.datastructure.template.Model
-import utopia.flow.datastructure.template.Property
-import utopia.nexus.http.FileUpload
 import utopia.nexus.http.Path
 import utopia.nexus.http.Response
-import utopia.nexus.http.Request
-import utopia.nexus.http.ServerSettings
 import utopia.access.http.Method
 
 trait Resource[-C <: Context]
@@ -26,7 +21,6 @@ trait Resource[-C <: Context]
     /**
      * Performs an operation on this resource and forms a response. The resource may expect that 
      * this method will only be called with methods that are allowed by the resource.
-     * @param request the request targeted to the resource
      * @param remainingPath if any of the path was left unfollowed by this resource earlier, it 
      * is provided here
      */
