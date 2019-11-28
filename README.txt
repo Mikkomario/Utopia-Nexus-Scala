@@ -53,6 +53,10 @@ v1.3 (Beta)   ---------------
     Updates & Changes
     -----------------
 
+        Resource search results (Ready, Follow, Error, Redirected) were placed under ResourceSearchResult object.
+        This will cause existing import statements to fail.
+        Simply replace import utopia.nexus.<result> with import utopia.nexus.ResourceSearchResult.<result>
+
         toString added to Request
 
 

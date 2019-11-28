@@ -4,19 +4,22 @@ import utopia.access.http.Method._
 import utopia.flow.generic.ValueConversions._
 import utopia.flow.util.NullSafe._
 import utopia.flow.datastructure.immutable
-
 import utopia.nexus.http.Path
 import utopia.nexus.http.Response
 import java.io.File
 import java.nio.file.Files
+
 import scala.util.Try
 import scala.util.Failure
 import utopia.flow.datastructure.immutable.Model
 import utopia.access.http.Status._
 import java.time.LocalDateTime
+
 import utopia.nexus.http.StreamedBody
+
 import scala.util.Success
 import utopia.flow.util.Counter
+import utopia.nexus.rest.ResourceSearchResult.Ready
 
 /**
  * This resource is used for uploading and retrieving file data.<br>

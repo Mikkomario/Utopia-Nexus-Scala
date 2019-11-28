@@ -2,13 +2,13 @@ package utopia.nexus.rest
 
 import utopia.flow.generic.ValueConversions._
 import utopia.flow.util.AutoClose._
-
 import utopia.nexus.http.Request
 import utopia.nexus.http.Path
 import utopia.nexus.http.Response
 import utopia.flow.datastructure.immutable.Model
 import utopia.access.http.Headers
 import utopia.access.http.Status._
+import utopia.nexus.rest.ResourceSearchResult.{Error, Follow, Ready, Redirected}
 import utopia.nexus.result.Result.Failure
 import utopia.nexus.result.Result.Success
 

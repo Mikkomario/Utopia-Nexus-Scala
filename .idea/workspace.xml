@@ -9,15 +9,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="58db1fbc-17d5-4263-88b3-2874e82541a0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../Utopia-Access-Scala/README.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Utopia-Access-Scala/README.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Utopia-Access-Scala/src/utopia/access/http/Cookie.scala" beforeDir="false" afterPath="$PROJECT_DIR$/../Utopia-Access-Scala/src/utopia/access/http/Cookie.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Utopia-Access-Scala/src/utopia/access/http/Headers.scala" beforeDir="false" afterPath="$PROJECT_DIR$/../Utopia-Access-Scala/src/utopia/access/http/Headers.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Utopia-Flow-Scala/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Utopia-Flow-Scala/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.txt" beforeDir="false" afterPath="$PROJECT_DIR$/README.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utopia/nexus/http/Path.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/utopia/nexus/http/Path.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utopia/nexus/http/Request.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/utopia/nexus/http/Request.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utopia/nexus/rest/FilesResource.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/utopia/nexus/rest/FilesResource.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utopia/nexus/rest/RequestHandler.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/utopia/nexus/rest/RequestHandler.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utopia/nexus/rest/ResourceSearchResult.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/utopia/nexus/rest/ResourceSearchResult.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/utopia/nexus/test/TestRestResource.scala" beforeDir="false" afterPath="$PROJECT_DIR$/test/utopia/nexus/test/TestRestResource.scala" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -124,7 +121,13 @@
       <option name="presentableId" value="LOCAL−00007" />
       <updated>1565514329931</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL−00008" summary="Access: isEmpty and nonEmpty methods added to Headers&#10;Nexus: toString added to Request">
+      <created>1574961630648</created>
+      <option name="number" value="LOCAL−00008" />
+      <option name="presentableId" value="LOCAL−00008" />
+      <updated>1574961630648</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -149,6 +152,7 @@
     <MESSAGE value="Flow: XmlReader refactored&#10;Nexus: Added conversions from StreamedBody to JSON and Xml" />
     <MESSAGE value="Flow: Fixed deprecation problems. Refactored Value.empty.&#10;Access: Gitignore updated&#10;Nexus: Fixed problems from Flow changes. JSON response now takes value instead of model" />
     <MESSAGE value="Workspace updated" />
-    <option name="LAST_COMMIT_MESSAGE" value="Workspace updated" />
+    <MESSAGE value="Access: isEmpty and nonEmpty methods added to Headers&#10;Nexus: toString added to Request" />
+    <option name="LAST_COMMIT_MESSAGE" value="Access: isEmpty and nonEmpty methods added to Headers&#10;Nexus: toString added to Request" />
   </component>
 </project>
