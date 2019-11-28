@@ -8,7 +8,17 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58db1fbc-17d5-4263-88b3-2874e82541a0" name="Default Changelist" comment="" />
+    <list default="true" id="58db1fbc-17d5-4263-88b3-2874e82541a0" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../Utopia-Access-Scala/README.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Utopia-Access-Scala/README.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Utopia-Access-Scala/src/utopia/access/http/Cookie.scala" beforeDir="false" afterPath="$PROJECT_DIR$/../Utopia-Access-Scala/src/utopia/access/http/Cookie.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Utopia-Access-Scala/src/utopia/access/http/Headers.scala" beforeDir="false" afterPath="$PROJECT_DIR$/../Utopia-Access-Scala/src/utopia/access/http/Headers.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Utopia-Flow-Scala/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Utopia-Flow-Scala/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.txt" beforeDir="false" afterPath="$PROJECT_DIR$/README.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utopia/nexus/http/Path.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/utopia/nexus/http/Path.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utopia/nexus/http/Request.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/utopia/nexus/http/Request.scala" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

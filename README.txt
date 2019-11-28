@@ -48,6 +48,14 @@ Usage Notes
         - For example, if you use Vault, you may wish to pass a database connection as a part of your context (optional).
 
 
+v1.3 (Beta)   ---------------
+
+    Updates & Changes
+    -----------------
+
+        toString added to Request
+
+
 v1.2    -----------------------
 
     Required Libraries

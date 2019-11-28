@@ -3,20 +3,10 @@ package utopia.nexus.http
 import utopia.flow.datastructure.immutable.Model
 import utopia.flow.datastructure.immutable.Constant
 import utopia.flow.datastructure.immutable.Value
-import utopia.flow.generic.ModelConvertible
-import utopia.flow.generic.ValueConversions._
-import utopia.flow.generic.FromModelFactory
-import utopia.flow.datastructure.template
-import utopia.flow.datastructure.template.Property
 
-import scala.collection.immutable.Map
-import scala.collection.immutable.HashMap
 import utopia.access.http.Method
 import utopia.access.http.Cookie
 import utopia.access.http.Headers
-import utopia.flow.parse.JSONReader
-
-import scala.io.Source
 
 /*
 object Request extends FromModelFactory[Request]
@@ -68,6 +58,30 @@ class Request(val method: Method, val targetUrl: String, val path: Option[Path] 
     // COMPUTED --------------------------------
     
     // def jsonBody = body.headOption.map { b => Source.fromInputStream(b.) }
+    
+    
+    // IMPLEMENTED  ----------------------------
+    
+    override def toString =
+    {
+        val sb = new StringBuilder
+        sb ++= s"$method $targetUrl"
+        path.foreach { p => sb ++= s" ($p)" }
+        if (parameters.nonEmpty)
+            sb ++= s", parameters=$parameters"
+        if (headers.nonEmpty)
+            sb ++= s", headers=$headers"
+        if (cookies.nonEmpty)
+            sb ++= s", cookies: ${ Model.fromMap(cookies.mapValues { _.toModel }) }"
+        if (body.nonEmpty)
+        {
+            sb ++= " with a body"
+            if (body.size > 1)
+                sb ++= s" (${body.size} parts)"
+        }
+        
+        sb.result()
+    }
     
     
     // OPERATORS    ----------------------------
