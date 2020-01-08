@@ -61,6 +61,8 @@ v1.3 (Beta)   ---------------
 
         RequestHandler now includes error messages in cases where a child resource cannot be found
 
+        ResultParser implementations are now case classes
+
 
 v1.2    -----------------------
 

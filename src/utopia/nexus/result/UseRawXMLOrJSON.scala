@@ -10,9 +10,9 @@ import utopia.nexus.http.Request
 * @author Mikko Hilpinen
 * @since 24.5.2018
 **/
-class UseRawXMLOrJSON(rootElementName: String = "Response", val preferJSON: Boolean = true) extends RawResultParser
+case class UseRawXMLOrJSON(rootElementName: String = "Response", preferJSON: Boolean = true) extends RawResultParser
 {
-    private val xmlParser = new UseRawXML(rootElementName)
+    private val xmlParser = UseRawXML(rootElementName)
     
 	def parseDataResponse(data: Value, status: Status, request: Request) =
 	{

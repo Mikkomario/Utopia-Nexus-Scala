@@ -17,7 +17,7 @@ import utopia.flow.parse.XmlWriter
 * @author Mikko Hilpinen
 * @since 24.5.2018
 **/
-class UseRawXML(val rootElementName: String = "Response") extends RawResultParser
+case class UseRawXML(rootElementName: String = "Response") extends RawResultParser
 {
 	def parseDataResponse(data: Value, status: Status, request: Request) =
 	{
