@@ -50,6 +50,12 @@ Usage Notes
 
 v1.3 (Beta)   ---------------
 
+    New Features
+    ------------
+
+        ServerSettings now also include expected parameter encoding (none by default)
+
+
     Updates & Changes
     -----------------
 
