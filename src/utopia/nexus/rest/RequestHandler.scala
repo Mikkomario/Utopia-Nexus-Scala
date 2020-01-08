@@ -55,8 +55,10 @@ class RequestHandler[C <: Context](val childResources: Traversable[Resource[C]],
             // Skips the path that leads to this handler resource
             while (pathToSkip.isDefined && error.isEmpty)
             {
-                if (remainingPath.isEmpty || !remainingPath.get.head.equalsIgnoreCase(pathToSkip.get.head))
-                    error = Some(Error())
+                if (remainingPath.isEmpty)
+                    error = Some(Error(message = Some(s"Expected request path to continue with /${pathToSkip.get}")))
+                else if (!remainingPath.get.head.equalsIgnoreCase(pathToSkip.get.head))
+                    error = Some(Error(message = Some(s"Expected ${pathToSkip.get}, found ${remainingPath.get}")))
                 else
                 {
                     remainingPath = remainingPath.get.tail
@@ -67,7 +69,9 @@ class RequestHandler[C <: Context](val childResources: Traversable[Resource[C]],
             val firstResource = remainingPath.map{ _.head }.flatMap { resourceName => 
                         childResources.find { _.name.equalsIgnoreCase(resourceName) } }
             if (remainingPath.isDefined && firstResource.isEmpty)
-                error = Some(Error())
+                error = Some(Error(message = Some(s"Couldn't find ${remainingPath.head} under ${
+                    path.map { _.toString }.getOrElse("Request Handler") }. Available resources: [${
+                    childResources.map { _.name }.mkString(", ")}]")))
             
             // Case: Error
             if (error.isDefined)
@@ -94,8 +98,7 @@ class RequestHandler[C <: Context](val childResources: Traversable[Resource[C]],
                         !foundTarget && redirectPath.isEmpty)
                 {
                     // Sees what's the resources reaction
-                    val result = lastResource.get.follow(remainingPath.get)
-                    result match
+                    lastResource.get.follow(remainingPath.get) match
                     {
                         case Ready(remaining) =>
                             foundTarget = true

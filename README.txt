@@ -59,6 +59,8 @@ v1.3 (Beta)   ---------------
 
         toString added to Request
 
+        RequestHandler now includes error messages in cases where a child resource cannot be found
+
 
 v1.2    -----------------------
 
