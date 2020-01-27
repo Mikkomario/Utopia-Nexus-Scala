@@ -12,8 +12,8 @@ import utopia.nexus.http.Response
 * @author Mikko Hilpinen
 * @since 24.5.2018
 **/
-class UseJSONEnvelope(val getDataName: Status => String = s => if (s.group == StatusGroup.Success) "data" else "error",
-					  val descriptionName: String = "description", val statusName: String = "status") extends ResultParser
+case class UseJSONEnvelope(getDataName: Status => String = s => if (s.group == StatusGroup.Success) "data" else "error",
+					  descriptionName: String = "description", statusName: String = "status") extends ResultParser
 {
 	def apply(result: Result, request: Request) = 
 	{

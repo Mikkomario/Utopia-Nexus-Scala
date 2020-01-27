@@ -1,13 +1,9 @@
 package utopia.nexus.test
 
 import utopia.access.http.Method._
-
 import utopia.nexus.http.Path
 import utopia.nexus.http.Response
 import utopia.nexus.http.ServerSettings
-import utopia.nexus.rest.Error
-import utopia.nexus.rest.Follow
-import utopia.nexus.rest.Ready
 import utopia.nexus.rest.Resource
 import utopia.flow.datastructure.immutable.Constant
 import utopia.flow.datastructure.immutable.Model
@@ -16,6 +12,7 @@ import utopia.flow.datastructure.template.Property
 import utopia.flow.generic.ValueConversions.ValueOfString
 import utopia.access.http.Status._
 import utopia.nexus.rest.Context
+import utopia.nexus.rest.ResourceSearchResult.{Error, Follow, Ready}
 
 private object TestRestResource
 {
@@ -96,8 +93,8 @@ class TestRestResource(val name: String, initialValues: template.Model[Constant]
     
     // Wraps values into a model and Displays the children as links
     private def handleGet(path: Option[Path])(implicit context: Context) = Response.fromModel(
-            Model.withConstants(values ++ children.map(child => new Constant(child.name,
-                (path/child.name).toServerUrl(context.settings).toValue))))
+            Model.withConstants(values ++ children.map(child => Constant(child.name,
+                (path / child.name).toServerUrl(context.settings).toValue))))
     
     private def handlePost(path: Path, parameters: template.Model[Constant])(implicit context: Context) =
     {

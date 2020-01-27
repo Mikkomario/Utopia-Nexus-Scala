@@ -79,7 +79,7 @@ case class Path(parts: Seq[String])
     
     // IMPLEMENTED METHODS    -----------------
     
-    override def toString = parts.reduceLeftOption { _ + "/" + _ }.getOrElse("")
+    override def toString = parts.mkString("/")
     
     
     // OPERATORS    ---------------------------
