@@ -55,9 +55,13 @@ v1.3 (Beta)   ---------------
 
         ServerSettings now also include expected parameter encoding (none by default)
 
+        StreamedBody now contains a variation of writeTo that accepts a java.nio.file.Path
+
 
     Updates & Changes
     -----------------
+
+        StreamedBody.writeToFile was deprecated
 
         Resource search results (Ready, Follow, Error, Redirected) were placed under ResourceSearchResult object.
         This will cause existing import statements to fail.
