@@ -32,7 +32,7 @@ import utopia.nexus.rest.ResourceSearchResult.Ready
  * @author Mikko Hilpinen
  * @since 17.9.2017
  */
-class FilesResource(override val name: String) extends Resource[Context]
+class FilesResource(override val name: String, uploadPath: java.nio.file.Path) extends Resource[Context]
 {
     // TODO: Convert to use result instead of response
     
@@ -136,8 +136,7 @@ class FilesResource(override val name: String) extends Resource[Context]
     private def upload(part: StreamedBody, partName: String, remainingPath: Option[Path])(implicit context: Context) = 
     {
         val makeDirectoryResult = remainingPath.map(_.toString()).map(
-                context.settings.uploadPath.resolve).map(
-                p => Try(Files.createDirectories(p))).getOrElse(Success(context.settings.uploadPath))
+                uploadPath.resolve).map(p => Try(Files.createDirectories(p))).getOrElse(Success(uploadPath))
         
         if (makeDirectoryResult.isSuccess)
         {
@@ -146,8 +145,7 @@ class FilesResource(override val name: String) extends Resource[Context]
             val filePath = makeDirectoryResult.get.resolve(fileName)
             
             // Writes the file, returns the server path for the targeted resource
-            part.writeToFile(filePath.toFile).map(
-                    _ => remainingPath.map(_/fileName) getOrElse Path(fileName))
+            part.writeTo(filePath).map(_ => remainingPath.map(_/fileName) getOrElse Path(fileName))
         }
         else
         {
@@ -187,8 +185,7 @@ class FilesResource(override val name: String) extends Resource[Context]
     }
     
     private def targetFilePathFrom(remainingPath: Option[Path])(implicit context: Context) = 
-            remainingPath.map { remaining => context.settings.uploadPath.resolve(
-            remaining.toString) }.getOrElse(context.settings.uploadPath)
+            remainingPath.map { remaining => uploadPath.resolve(remaining.toString) }.getOrElse(uploadPath)
     
     private def myLocationFrom(targetPath: Path, remainingPath: Option[Path]) = 
             remainingPath.flatMap(targetPath.before).getOrElse(targetPath)

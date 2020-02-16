@@ -61,6 +61,8 @@ v1.3 (Beta)   ---------------
     Updates & Changes
     -----------------
 
+        ServerSettings no longer specify file upload location
+
         StreamedBody.writeToFile was deprecated
 
         Resource search results (Ready, Follow, Error, Redirected) were placed under ResourceSearchResult object.
