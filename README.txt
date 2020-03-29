@@ -48,7 +48,7 @@ Usage Notes
         - For example, if you use Vault, you may wish to pass a database connection as a part of your context (optional).
 
 
-v1.3 (Beta)   ---------------
+v1.3    ---------------------
 
     New Features
     ------------
@@ -74,6 +74,12 @@ v1.3 (Beta)   ---------------
         RequestHandler now includes error messages in cases where a child resource cannot be found
 
         ResultParser implementations are now case classes
+
+
+    Required Libraries
+    ------------------
+        - Utopia Flow v1.6.1+
+        - Utopia Access v1.1.2+
 
 
 v1.2    -----------------------
