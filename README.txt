@@ -48,6 +48,40 @@ Usage Notes
         - For example, if you use Vault, you may wish to pass a database connection as a part of your context (optional).
 
 
+v1.3    ---------------------
+
+    New Features
+    ------------
+
+        ServerSettings now also include expected parameter encoding (none by default)
+
+        StreamedBody now contains a variation of writeTo that accepts a java.nio.file.Path
+
+
+    Updates & Changes
+    -----------------
+
+        ServerSettings no longer specify file upload location
+
+        StreamedBody.writeToFile was deprecated
+
+        Resource search results (Ready, Follow, Error, Redirected) were placed under ResourceSearchResult object.
+        This will cause existing import statements to fail.
+        Simply replace import utopia.nexus.<result> with import utopia.nexus.ResourceSearchResult.<result>
+
+        toString added to Request
+
+        RequestHandler now includes error messages in cases where a child resource cannot be found
+
+        ResultParser implementations are now case classes
+
+
+    Required Libraries
+    ------------------
+        - Utopia Flow v1.6.1+
+        - Utopia Access v1.1.2+
+
+
 v1.2    -----------------------
 
     Required Libraries

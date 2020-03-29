@@ -4,19 +4,22 @@ import utopia.access.http.Method._
 import utopia.flow.generic.ValueConversions._
 import utopia.flow.util.NullSafe._
 import utopia.flow.datastructure.immutable
-
 import utopia.nexus.http.Path
 import utopia.nexus.http.Response
 import java.io.File
 import java.nio.file.Files
+
 import scala.util.Try
 import scala.util.Failure
 import utopia.flow.datastructure.immutable.Model
 import utopia.access.http.Status._
 import java.time.LocalDateTime
+
 import utopia.nexus.http.StreamedBody
+
 import scala.util.Success
 import utopia.flow.util.Counter
+import utopia.nexus.rest.ResourceSearchResult.Ready
 
 /**
  * This resource is used for uploading and retrieving file data.<br>
@@ -29,7 +32,7 @@ import utopia.flow.util.Counter
  * @author Mikko Hilpinen
  * @since 17.9.2017
  */
-class FilesResource(override val name: String) extends Resource[Context]
+class FilesResource(override val name: String, uploadPath: java.nio.file.Path) extends Resource[Context]
 {
     // TODO: Convert to use result instead of response
     
@@ -133,8 +136,7 @@ class FilesResource(override val name: String) extends Resource[Context]
     private def upload(part: StreamedBody, partName: String, remainingPath: Option[Path])(implicit context: Context) = 
     {
         val makeDirectoryResult = remainingPath.map(_.toString()).map(
-                context.settings.uploadPath.resolve).map(
-                p => Try(Files.createDirectories(p))).getOrElse(Success(context.settings.uploadPath))
+                uploadPath.resolve).map(p => Try(Files.createDirectories(p))).getOrElse(Success(uploadPath))
         
         if (makeDirectoryResult.isSuccess)
         {
@@ -143,8 +145,7 @@ class FilesResource(override val name: String) extends Resource[Context]
             val filePath = makeDirectoryResult.get.resolve(fileName)
             
             // Writes the file, returns the server path for the targeted resource
-            part.writeToFile(filePath.toFile).map(
-                    _ => remainingPath.map(_/fileName) getOrElse Path(fileName))
+            part.writeTo(filePath).map(_ => remainingPath.map(_/fileName) getOrElse Path(fileName))
         }
         else
         {
@@ -184,8 +185,7 @@ class FilesResource(override val name: String) extends Resource[Context]
     }
     
     private def targetFilePathFrom(remainingPath: Option[Path])(implicit context: Context) = 
-            remainingPath.map { remaining => context.settings.uploadPath.resolve(
-            remaining.toString) }.getOrElse(context.settings.uploadPath)
+            remainingPath.map { remaining => uploadPath.resolve(remaining.toString) }.getOrElse(uploadPath)
     
     private def myLocationFrom(targetPath: Path, remainingPath: Option[Path]) = 
             remainingPath.flatMap(targetPath.before).getOrElse(targetPath)

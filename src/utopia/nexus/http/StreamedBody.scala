@@ -3,6 +3,7 @@ package utopia.nexus.http
 import scala.language.postfixOps
 import utopia.access.http.ContentCategory._
 import utopia.flow.util.AutoClose._
+import utopia.flow.util.FileExtensions._
 import java.io.{BufferedReader, File, FileOutputStream, OutputStream}
 
 import utopia.access.http.ContentType
@@ -70,7 +71,15 @@ class StreamedBody(val reader: BufferedReader, val contentType: ContentType = Te
     }
     
     /**
+     * Writes the contents of this body to a file
+     * @param path Path where to write the stream contents
+     * @return Provided path. Failure if writing failed.
+     */
+    def writeTo(path: java.nio.file.Path): Try[java.nio.file.Path] = path.writeWith { stream => writeTo(stream) }
+    
+    /**
      * Writes the contents of this body into a file
      */
+    @deprecated("Please use writeTo(Path) instead", "v1.3")
     def writeToFile(file: File) = new FileOutputStream(file).consume(writeTo)
 }

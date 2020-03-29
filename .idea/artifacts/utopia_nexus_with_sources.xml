@@ -3,7 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/utopia_nexus_with_sources</output-path>
     <root id="archive" name="utopia-nexus-with-sources.jar">
       <element id="module-output" name="Utopia-Nexus-Scala" />
-      <element id="dir-copy" path="$PROJECT_DIR$/src" />
+      <element id="module-source" name="Utopia-Nexus-Scala" />
     </root>
   </artifact>
 </component>

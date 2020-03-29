@@ -28,10 +28,10 @@ object RestResourceTest extends App
     DataType.setup()
     
     // Creates the main resources first
-    implicit val settings: ServerSettings = ServerSettings("https://localhost:9999", Paths.get("D:/Uploads"))
+    implicit val settings: ServerSettings = ServerSettings("https://localhost:9999")
     
     val rootResource = new TestRestResource("root")
-    val filesResource = new FilesResource("files")
+    val filesResource = new FilesResource("files", Paths.get("D:/Uploads"))
     val handler = new RequestHandler(Vector(rootResource, filesResource), Some(Path("rest")), req => new BaseContext(req))
     
     def responseToString(response: Response) = 

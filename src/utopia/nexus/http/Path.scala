@@ -1,5 +1,7 @@
 package utopia.nexus.http
 
+import utopia.flow.util.CollectionExtensions._
+
 object Path
 {
     // OPERATORS    ----------------------
@@ -79,7 +81,7 @@ case class Path(parts: Seq[String])
     
     // IMPLEMENTED METHODS    -----------------
     
-    override def toString = parts.reduceLeftOption { _ + "/" + _ }.getOrElse("")
+    override def toString = parts.mkString("/")
     
     
     // OPERATORS    ---------------------------
@@ -126,13 +128,9 @@ case class Path(parts: Seq[String])
     {
         val partIndex = parts.indexOfSlice(part.parts)
         if (partIndex <= 0)
-        {
             None
-        }
         else
-        {
             Some(Path(parts.take(partIndex)))
-        }
     }
     
     /**
@@ -144,20 +142,28 @@ case class Path(parts: Seq[String])
     {
         val partIndex = parts.indexOfSlice(part.parts)
         if (partIndex < 0)
-        {
             None
-        }
         else
         {
             val partEndIndex = partIndex + part.parts.size
             if (partEndIndex >= parts.size)
-            {
                 None
-            }
             else
-            {
                 Some(Path(parts.drop(partEndIndex)))
-            }
         }
     }
+    
+    /**
+     * @param element A path element
+     * @return The portion of this path that comes before the specified element. None if the specified element is not
+     *         part of this path or if it was the first element in this path.
+     */
+    def before(element: String) = parts.optionIndexOf(element).filter { _ > 0 }.map { index => Path(parts.take(index)) }
+    
+    /**
+     * @param element Searched element
+     * @return A portion of this path that ends with the specified element. None if this path didn't contain specified
+     *         element.
+     */
+    def until(element: String) = parts.optionIndexOf(element).map { index => Path(parts.take(index + 1)) }
 }
